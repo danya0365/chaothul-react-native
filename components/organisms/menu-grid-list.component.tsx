@@ -20,7 +20,13 @@ export const MenuGridList = (props: MenuGridListProps): ListElement => {
 
   const renderItem = (info: ListRenderItemInfo<MenuItem>): ListItemElement => (
     <Card style={styles.item} onPress={() => props.onItemPress(info.index)}>
-      <View style={{ paddingVertical: 4, paddingHorizontal: 24 }}>
+      <View
+        style={{
+          paddingVertical: 4,
+          paddingHorizontal: 24,
+          alignItems: "center",
+        }}
+      >
         {info.item.icon({ width: 24, height: 24, alignSelf: "center" })}
         <Text style={styles.itemTitle} category="s2">
           {info.item.title}

@@ -6,7 +6,7 @@ import {
   TopNavigationAction,
   useStyleSheet,
 } from "@ui-kitten/components";
-import YourWork from "../../layouts/your-work";
+import YourWork from "../../layouts/your-works";
 import useAuth from "@/hooks/auth";
 import { ArrowIosBackIcon, FileAddOutlineIcon } from "@/components/atoms/icons";
 import { useNavigation } from "expo-router";
@@ -28,13 +28,9 @@ export const YourWorkScreen = (): React.ReactElement => {
       icon={FileAddOutlineIcon}
       onPress={() => {
         if (user?.isPermission("create_work")) {
-          // TODO:
-          router.push("/todo");
-          //navigation.navigate("New Work Screen");
+          router.push("/new-work");
         } else {
-          // TODO:
-          router.push("/todo");
-          //navigation.navigate("Payment Screen");
+          router.push("/payment");
         }
       }}
     />

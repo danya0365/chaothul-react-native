@@ -41,6 +41,10 @@ export default function RootLayout() {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="messenger-chat" options={{ headerShown: false }} />
+        <Stack.Screen name="your-recruits" options={{ headerShown: false }} />
+        <Stack.Screen name="your-works" options={{ headerShown: false }} />
+        <Stack.Screen name="new-recruit" options={{ headerShown: false }} />
+        <Stack.Screen name="new-work" options={{ headerShown: false }} />
       </Stack>
     </>
   );

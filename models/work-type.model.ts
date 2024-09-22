@@ -1,4 +1,5 @@
 import { ImageSourcePropType } from "react-native";
+import { Json } from "./json";
 
 export class WorkType {
   constructor(
@@ -8,10 +9,7 @@ export class WorkType {
     readonly primaryImage?: ImageSourcePropType
   ) {}
 
-  static createFromApi(workType: any): WorkType | null {
-    if (!workType) {
-      return null;
-    }
+  static createFromApi(workType: Json): WorkType {
     return new WorkType(workType.id, workType.title);
   }
 }

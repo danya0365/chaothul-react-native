@@ -1,11 +1,11 @@
-import { ImageSourcePropType } from "react-native";
-import { UserProfile } from "./user-profile";
-import { Like } from "./like.model";
-import { Review } from "./review.model";
-import { Province } from "./province.model";
-import { WorkType } from "./work-type.model";
-import { log } from "react-native-reanimated";
 import moment from "moment";
+import { ImageSourcePropType } from "react-native";
+import { Json } from "./json";
+import { Like } from "./like.model";
+import { Province } from "./province.model";
+import { Review } from "./review.model";
+import { UserProfile } from "./user-profile";
+import { WorkType } from "./work-type.model";
 
 export class Work {
   likeCount: number = 0;
@@ -65,29 +65,29 @@ export class Work {
     this.replyCount = replyCount;
   }
 
-  static createFromApi(work: any): Work {
-    const images = work?.images?.map((image: string) => ({
+  static createFromApi(json: Json): Work {
+    const images = json.images?.map((image: string) => ({
       uri: image,
     }));
 
     const workInfo = new Work(
-      work?.id,
-      work?.code,
-      work?.title,
-      work?.description,
-      work?.details,
-      { uri: work?.primary_image },
+      json.id,
+      json.code,
+      json.title,
+      json.description,
+      json.details,
+      { uri: json.primary_image },
       images,
-      work?.price,
-      Province.createFromApi(work?.province) as Province,
-      WorkType.createFromApi(work?.workType) as WorkType,
-      UserProfile.createFromApi(work?.author) as UserProfile,
+      json.price,
+      Province.createFromApi(json.province),
+      WorkType.createFromApi(json.work_type),
+      UserProfile.createFromApi(json.author),
       true,
-      new Date(work?.created_at)
+      new Date(json.created_at)
     );
 
-    workInfo.setLikeCount(work?.like_count ?? 0);
-    workInfo.setReplyCount(work?.reply_count ?? 0);
+    workInfo.setLikeCount(json.like_count ?? 0);
+    workInfo.setReplyCount(json.reply_count ?? 0);
     return workInfo;
   }
 }

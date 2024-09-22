@@ -33,9 +33,14 @@ export class ConfigurationApiService extends ApiService {
   }
 }
 
-export class ProvinceApiService extends ApiService {
+export class MasterDataApiService extends ApiService {
   public async getProvinces(): Promise<ApiDataListResponse> {
     const response = await this.request.get(`/provinces`);
+    return response.data;
+  }
+
+  public async getWorkTypes(): Promise<ApiDataListResponse> {
+    const response = await this.request.get(`/work-types`);
     return response.data;
   }
 }
@@ -456,7 +461,7 @@ export class WorkApiService extends ApiService {
     description: string,
     details: string[],
     provinceId: string,
-    workTypeId: string,
+    workTypeId: number,
     price: string,
     primaryImage: string,
     images: string[]

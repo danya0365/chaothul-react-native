@@ -1,5 +1,6 @@
 import { AppConfig } from "@/models/app-config";
 import { Province } from "@/models/province.model";
+import { WorkType } from "@/models/work-type.model";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface AppState {
@@ -8,6 +9,7 @@ interface AppState {
   lastBannerUpdate: string | null;
   isNewNotification: boolean;
   provinces: Province[] | null;
+  workTypes: WorkType[] | null;
 }
 
 const initialState: AppState = {
@@ -16,6 +18,7 @@ const initialState: AppState = {
   lastBannerUpdate: null,
   isNewNotification: false,
   provinces: null,
+  workTypes: null,
 };
 
 const appSlice = createSlice({
@@ -34,6 +37,12 @@ const appSlice = createSlice({
     setLastBannerUpdate(state, action: PayloadAction<string | null>) {
       state.lastBannerUpdate = action.payload;
     },
+    setProvinces(state, action: PayloadAction<Province[]>) {
+      state.provinces = action.payload;
+    },
+    setWorkTypes(state, action: PayloadAction<WorkType[]>) {
+      state.workTypes = action.payload;
+    },
   },
 });
 
@@ -42,5 +51,7 @@ export const {
   setLastNotificationUpdate,
   setLastBannerUpdate,
   setIsNewNotification,
+  setProvinces,
+  setWorkTypes,
 } = appSlice.actions;
 export default appSlice.reducer;

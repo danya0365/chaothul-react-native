@@ -24,6 +24,7 @@ import { KeyboardAvoidingView } from "@/components/atoms/keyboard-avoiding-view.
 import { MultipleImageUpload } from "@/components/molecules/multple-image-upload.component";
 import AlertModalComponent from "@/components/molecules/alert-modal.component";
 import LoadingView from "@/components/organisms/loading.view";
+import { WorkType } from "@/models/work-type.model";
 
 const useInputState = (initialValue = ""): InputProps => {
   const [value, setValue] = React.useState(initialValue);
@@ -36,12 +37,14 @@ interface Props {
 
 export default ({ onWorkCreated }: Props): React.ReactElement => {
   const workApiService = new WorkApiService(httpRequest);
-  const { provinces } = useAppSelector((state) => state.app);
+  const { provinces, workTypes } = useAppSelector((state) => state.app);
   const workCode = useInputState();
   const workTitle = useInputState();
   const workDescription = useInputState();
   const workPrice = useInputState();
   const [provinceSelectedIndex, setProvinceSelectedIndex] =
+    React.useState<IndexPath>(new IndexPath(0));
+  const [workTypeSelectedIndex, setWorkTypeSelectedIndex] =
     React.useState<IndexPath>(new IndexPath(0));
   const [errorModalMessage, setErrorModalMessage] = React.useState<string>("");
   const [errorModalVisible, setErrorModalVisible] = React.useState(false);
@@ -51,6 +54,10 @@ export default ({ onWorkCreated }: Props): React.ReactElement => {
 
   const getProvinceSelected = (): Province => {
     return provinces![provinceSelectedIndex.row] ?? null;
+  };
+
+  const getWorkTypeSelected = (): WorkType => {
+    return workTypes![workTypeSelectedIndex.row] ?? null;
   };
 
   const onConfirmButtonPress = async () => {
@@ -81,8 +88,9 @@ export default ({ onWorkCreated }: Props): React.ReactElement => {
 
     setIsLoading(true);
 
-    let primaryPhotoUrl = uploadedImages.length > 0 ? uploadedImages[0] : "";
-    let provinceId = getProvinceSelected()?.key ?? "";
+    const primaryPhotoUrl = uploadedImages.length > 0 ? uploadedImages[0] : "";
+    const provinceId = getProvinceSelected()?.key ?? "";
+    const workTypeId = getWorkTypeSelected()?.id ?? "";
 
     const workFormData: WorkFormData = {
       code: workCode.value,
@@ -90,7 +98,7 @@ export default ({ onWorkCreated }: Props): React.ReactElement => {
       description: workDescription.value,
       details: [],
       provinceId: provinceId,
-      workTypeId: `${1}`,
+      workTypeId: Number(workTypeId),
       price: workPrice.value,
       primaryImage: primaryPhotoUrl,
       images: uploadedImages,
@@ -129,10 +137,17 @@ export default ({ onWorkCreated }: Props): React.ReactElement => {
   };
 
   const provinceSelectedDisplayValue = getProvinceSelected();
+  const workTypeSelectedDisplayValue = getWorkTypeSelected();
 
-  const renderOption = ({ key, title }: Province): React.ReactElement => (
-    <SelectItem title={title} key={key} />
-  );
+  const renderProvinceOption = ({
+    key,
+    title,
+  }: Province): React.ReactElement => <SelectItem title={title} key={key} />;
+
+  const renderWorkTypeOption = ({
+    id,
+    title,
+  }: WorkType): React.ReactElement => <SelectItem title={title} key={id} />;
 
   const showErrorMessage = (errorMessage: string) => {
     setErrorModalMessage(errorMessage);
@@ -145,6 +160,16 @@ export default ({ onWorkCreated }: Props): React.ReactElement => {
         <KeyboardAvoidingView style={styles.container}>
           <MultipleImageUpload setUploadedImages={setUploadedImages} />
           <Layout style={styles.formContainer} level="1">
+            <Select
+              label="ประเภทรถ"
+              style={styles.select}
+              placeholder="เลือกรถ"
+              value={workTypeSelectedDisplayValue.title}
+              selectedIndex={workTypeSelectedIndex}
+              onSelect={(index) => setWorkTypeSelectedIndex(index as IndexPath)}
+            >
+              {workTypes!.map(renderWorkTypeOption)}
+            </Select>
             <Input
               label="ทะเบียนรถ"
               autoCapitalize="none"
@@ -154,7 +179,7 @@ export default ({ onWorkCreated }: Props): React.ReactElement => {
             <Input
               label="ชื่องาน"
               autoCapitalize="none"
-              placeholder="รับของของ"
+              placeholder="รับขนของย้ายบ้าน"
               {...workTitle}
             />
             <Input
@@ -174,7 +199,7 @@ export default ({ onWorkCreated }: Props): React.ReactElement => {
               selectedIndex={provinceSelectedIndex}
               onSelect={(index) => setProvinceSelectedIndex(index as IndexPath)}
             >
-              {provinces!.map(renderOption)}
+              {provinces!.map(renderProvinceOption)}
             </Select>
             <Input
               label="ราคา"
@@ -229,10 +254,9 @@ const themedStyles = StyleService.create({
     flex: 1,
     paddingTop: 32,
     paddingHorizontal: 16,
+    gap: 16,
   },
-  inputText: {
-    marginTop: 16,
-  },
+  inputText: {},
   confirmButton: {
     marginTop: 16,
     marginHorizontal: 16,

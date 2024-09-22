@@ -6,7 +6,7 @@ import {
   TopNavigationAction,
   useStyleSheet,
 } from "@ui-kitten/components";
-import YourRecruit from "../../layouts/your-recruit";
+import YourRecruit from "../../layouts/your-recruits";
 import { useNavigation } from "expo-router";
 import useAuth from "@/hooks/auth";
 import { ArrowIosBackIcon, FileAddOutlineIcon } from "@/components/atoms/icons";
@@ -29,13 +29,9 @@ export const YourRecruitScreen = (): React.ReactElement => {
       icon={FileAddOutlineIcon}
       onPress={() => {
         if (user?.isPermission("create_recruit")) {
-          // TODO:
-          router.push("/todo");
-          //navigation.navigate("New Recruit Screen");
+          router.push("/new-recruit");
         } else {
-          // TODO:
-          router.push("/todo");
-          //navigation.navigate("Payment Screen");
+          router.push("/payment");
         }
       }}
     />

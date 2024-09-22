@@ -23,10 +23,7 @@ export class Province {
     ];
   }
 
-  static createFromApi(province: any): Province | null {
-    if (!province) {
-      return null;
-    }
+  static createFromApi(province: any): Province {
     return new Province(province.id, province.title, {
       uri: province.photo,
     });

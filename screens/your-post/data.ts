@@ -16,7 +16,7 @@ export interface LayoutData extends MenuItem {
 export const data: LayoutData[] = [
   {
     title: "โพสท์รับงาน",
-    route: "Your Work Screen",
+    route: "your-works",
     icon: (style: ImageStyle) => {
       return React.createElement(ThemedIcon, {
         ...style,
@@ -27,7 +27,7 @@ export const data: LayoutData[] = [
   },
   {
     title: "โพสท์หางาน",
-    route: "Your Recruit Screen",
+    route: "your-recruits",
     icon: (style: ImageStyle) => {
       return React.createElement(ThemedIcon, {
         ...style,

@@ -4,8 +4,11 @@ import { AppConfig } from "@/models/app-config";
 import { Json } from "@/models/json";
 import { MessengerConversation } from "@/models/messenger-conversation";
 import { Notification } from "@/models/notification";
+import { Province } from "@/models/province.model";
+import { WorkType } from "@/models/work-type.model";
 import {
   ConfigurationApiService,
+  MasterDataApiService,
   MessengerApiService,
   NotificationApiService,
 } from "@/services/api.service";
@@ -14,6 +17,8 @@ import {
   setConfig,
   setIsNewNotification,
   setLastNotificationUpdate,
+  setProvinces,
+  setWorkTypes,
 } from "@/store/reducer/app-reducer";
 import {
   setChannelId,
@@ -27,6 +32,7 @@ type Props = {
   configurationApiService?: ConfigurationApiService;
   notificationApiService?: NotificationApiService;
   messengerApiService?: MessengerApiService;
+  masterDataApiService?: MasterDataApiService;
   dispatch?: UseAppDispatch;
 };
 const ConfigProvider: React.FC<Props> = (props) => {
@@ -40,6 +46,7 @@ const ConfigProvider: React.FC<Props> = (props) => {
     configurationApiService = new ConfigurationApiService(),
     notificationApiService = new NotificationApiService(),
     messengerApiService = new MessengerApiService(),
+    masterDataApiService = new MasterDataApiService(),
     dispatch = useAppDispatch(),
   } = props;
 
@@ -54,6 +61,30 @@ const ConfigProvider: React.FC<Props> = (props) => {
       }
     } catch (error) {
       console.log("getConfigurations error:", error);
+    }
+  };
+
+  const getProvinces = async () => {
+    try {
+      const response = await masterDataApiService.getProvinces();
+      if (response.status) {
+        const items = response.data.map((val) => Province.createFromApi(val));
+        dispatch(setProvinces(items));
+      }
+    } catch (error) {
+      console.log("getProvinces error:", error);
+    }
+  };
+
+  const getWorkTypes = async () => {
+    try {
+      const response = await masterDataApiService.getWorkTypes();
+      if (response.status) {
+        const items = response.data.map((val) => WorkType.createFromApi(val));
+        dispatch(setWorkTypes(items));
+      }
+    } catch (error) {
+      console.log("getProvinces error:", error);
     }
   };
 
@@ -108,7 +139,12 @@ const ConfigProvider: React.FC<Props> = (props) => {
 
   const getApiData = async () => {
     setLoading(true);
-    const promises = [getConfigurations(), getLastUpdateNotification()];
+    const promises = [
+      getConfigurations(),
+      getLastUpdateNotification(),
+      getProvinces(),
+      getWorkTypes(),
+    ];
     try {
       await Promise.all(promises);
     } catch (error) {

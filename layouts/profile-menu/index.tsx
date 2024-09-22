@@ -20,6 +20,7 @@ import httpRequest from "../../services/http-request.service";
 import { PinIcon } from "./extra/icons";
 import { ImageOverlay } from "./extra/image-overlay.component";
 import { ProfileMenuItem } from "./extra/profile-menu-item.component";
+import { useNavigation } from "expo-router";
 
 /*
  * Will warn because container view is ScrollView that contains 3 List components inside.
@@ -30,6 +31,7 @@ LogBox.ignoreLogs([
 ]);
 
 export default (): React.ReactElement => {
+  const navigation = useNavigation();
   const { token, logoutSuccess, callGetAuthUser, user, loading } = useAuth();
   const styles = useStyleSheet(themedStyle);
   const apiService = new AuthApiService(httpRequest);
@@ -61,9 +63,15 @@ export default (): React.ReactElement => {
     }, 500);
   }, [token]);
 
-  useEffect(() => {
-    console.log("user profile", user);
-  }, [user]);
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      doRequestProfile(() => {
+        setRefreshing(false);
+      });
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <>

@@ -4,7 +4,7 @@ export interface WorkFormData {
   description: string;
   details: string[];
   provinceId: string;
-  workTypeId: string;
+  workTypeId: number;
   price: string;
   primaryImage: string;
   images: string[];

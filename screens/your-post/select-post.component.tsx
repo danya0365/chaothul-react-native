@@ -18,7 +18,7 @@ export const SelectPostScreen = (): React.ReactElement => {
 
   const onItemPress = (index: number): void => {
     // TODO:
-    router.push("/todo");
+    router.push(data[index].route);
     //navigation.navigate(data[index].route);
   };
 

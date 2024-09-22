@@ -48,15 +48,22 @@ export class UserProfile {
     return obj;
   }
 
-  static createFromObject(user: UserProfile): UserProfile {
-    return new UserProfile(
-      user.id,
-      user.firstName,
-      user.lastName,
-      user.email,
-      user.photo,
-      user.location
+  static createFromObject(value: UserProfile): UserProfile {
+    const obj = new UserProfile(
+      value.id,
+      value.firstName,
+      value.lastName,
+      value.email,
+      value.photo,
+      value.location
     );
+    obj.roles = value.roles
+      ? value.roles.map((val) => UserRole.createFromObject(val))
+      : [];
+    obj.permissions = value.permissions
+      ? value.permissions.map((val) => Permission.createFromObject(val))
+      : [];
+    return obj;
   }
 
   isPermission(permissionSlug: Permission.Slug): boolean {
@@ -65,6 +72,17 @@ export class UserProfile {
     );
     if (permission) {
       return permission.data;
+    }
+
+    console.log("this.roles", this.roles);
+
+    for (const role of this.roles) {
+      const permission = role.permissions.find(
+        (val) => val.slug === permissionSlug
+      );
+      if (permission) {
+        return permission.data;
+      }
     }
     return false;
   }

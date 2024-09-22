@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ListRenderItemInfo, RefreshControl } from "react-native";
 import { List, StyleService, useStyleSheet } from "@ui-kitten/components";
 import { Work } from "@/models/work.model";
@@ -79,6 +79,9 @@ export default (): React.ReactElement => {
     />
   );
 
+  useEffect(() => {
+    console.log("works", works);
+  }, [works]);
   return (
     <>
       <List
