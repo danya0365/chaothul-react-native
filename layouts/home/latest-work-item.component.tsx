@@ -8,14 +8,12 @@ interface Props {
   item: Work;
   index: Number;
   separators: any;
-  navigation: any;
 }
 
 export const LatestWorkItem = ({
   item,
   index,
   separators,
-  navigation,
 }: Props): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
   const onItemPress = (): void => {

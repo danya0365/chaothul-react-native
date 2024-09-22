@@ -10,15 +10,10 @@ import {
 import WorkBookingList from "../../layouts/work-booking-list";
 import { ArrowIosBackIcon } from "@/components/atoms/icons";
 import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 
-export const WorkBookingListScreen = ({
-  route,
-  navigation,
-}: {
-  route: any;
-  navigation: any;
-}): React.ReactElement => {
+export const WorkBookingListScreen = (): React.ReactElement => {
+  const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
   const { id: workId } = useLocalSearchParams<{ id: string }>();
   const renderBackAction = (): React.ReactElement => (

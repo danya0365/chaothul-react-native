@@ -17,14 +17,10 @@ import { router } from "expo-router";
 import { Work } from "@/models/work.model";
 
 interface Props {
-  navigation: any;
   refreshFlag: boolean;
 }
 
-export const LatestWork = ({
-  navigation,
-  refreshFlag,
-}: Props): React.ReactElement => {
+export const LatestWork = ({ refreshFlag }: Props): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
   const [works, setWorks] = useState<Work[]>();
   const [isGetLatestWork, setIsGetLatestWork] = React.useState(false);
@@ -83,12 +79,7 @@ export const LatestWork = ({
           horizontal={true}
           data={works}
           renderItem={({ item, index, separators }) => (
-            <LatestWorkItem
-              item={item}
-              index={index}
-              separators={separators}
-              navigation={navigation}
-            />
+            <LatestWorkItem item={item} index={index} separators={separators} />
           )}
         />
       </View>

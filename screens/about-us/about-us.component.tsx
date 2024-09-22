@@ -9,12 +9,10 @@ import {
 import AboutUs from "../../layouts/about-us";
 import { ArrowIosBackIcon } from "@/components/atoms/icons";
 import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
+import { useNavigation } from "expo-router";
 
-export const AboutUsScene = ({
-  navigation,
-}: {
-  navigation: any;
-}): React.ReactElement => {
+export const AboutUsScene = (): React.ReactElement => {
+  const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
 
   const renderBackAction = (): React.ReactElement => (

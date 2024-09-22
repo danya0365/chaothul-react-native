@@ -17,14 +17,12 @@ import WorkItemComponent from "./extra/work-item.component";
 import { Work } from "@/models/work.model";
 
 interface Props {
-  navigation: any;
   works: Work[];
   pageNumber: number;
   setPageNumber: any;
 }
 
 export default ({
-  navigation,
   works,
   pageNumber,
   setPageNumber,

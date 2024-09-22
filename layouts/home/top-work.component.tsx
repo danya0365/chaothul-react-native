@@ -15,14 +15,10 @@ import { AxiosResponse } from "axios";
 import { Work } from "@/models/work.model";
 
 interface Props {
-  navigation: any;
   refreshFlag: boolean;
 }
 
-export const TopWork = ({
-  navigation,
-  refreshFlag,
-}: Props): React.ReactElement => {
+export const TopWork = ({ refreshFlag }: Props): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
   const [isGettingWork, setIsGettingWork] = React.useState(false);
   const [pageNumber, setPageNumber] = React.useState(1);
@@ -67,7 +63,6 @@ export const TopWork = ({
       </View>
       <View style={[styles.rowContainer, { marginTop: 8 }]}>
         <WorkList2Column
-          navigation={navigation}
           works={works as Work[]}
           pageNumber={pageNumber}
           setPageNumber={setPageNumber}

@@ -27,7 +27,7 @@ export const ProfileMenuItem = (): React.ReactElement => {
         accessoryRight={ForwardIcon}
         onPress={() => {
           // TODO:
-          router.push("/todo");
+          router.push("/auth/login");
           //navigation.navigate("Login Screen");
         }}
       />
@@ -37,7 +37,7 @@ export const ProfileMenuItem = (): React.ReactElement => {
         accessoryRight={ForwardIcon}
         onPress={() => {
           // TODO:
-          router.push("/todo");
+          router.push("/theme");
           //navigation.navigate("Theme Screen");
         }}
       />
@@ -47,7 +47,7 @@ export const ProfileMenuItem = (): React.ReactElement => {
         accessoryRight={ForwardIcon}
         onPress={() => {
           // TODO:
-          router.push("/todo");
+          router.push("/about-us");
           //navigation.navigate("About Us Screen");
         }}
       />

@@ -5,11 +5,7 @@ import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
 import LogoNavigationBarView from "@/components/atoms/logo-navigation-bar.view";
 //import FontList from "react-native-font-list";
 
-export const HomesScreen = ({
-  navigation,
-}: {
-  navigation: any;
-}): React.ReactElement => {
+export const HomesScreen = (): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
 
   // FontList.get((fontFamilies: any, fonts: any) => {
@@ -20,7 +16,7 @@ export const HomesScreen = ({
     <SafeAreaLayoutView style={styles.safeArea} insets="top">
       <LogoNavigationBarView />
       <Divider />
-      <Home navigation={navigation} />
+      <Home />
     </SafeAreaLayoutView>
   );
 };

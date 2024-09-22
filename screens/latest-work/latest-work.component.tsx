@@ -14,12 +14,10 @@ import { View } from "react-native";
 import WorkList2Column from "../../layouts/works/work-list-2-column";
 import { WorkApiService } from "../../services/api.service";
 import httpRequest from "../../services/http-request.service";
+import { useNavigation } from "expo-router";
 
-export const LatestWorksScreen = ({
-  navigation,
-}: {
-  navigation: any;
-}): React.ReactElement => {
+export const LatestWorksScreen = (): React.ReactElement => {
+  const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
 
   const workApiService = new WorkApiService(httpRequest);
@@ -58,7 +56,6 @@ export const LatestWorksScreen = ({
       <Divider />
       <View style={[styles.container]}>
         <WorkList2Column
-          navigation={navigation}
           works={works || []}
           pageNumber={pageNumber}
           setPageNumber={setPageNumber}

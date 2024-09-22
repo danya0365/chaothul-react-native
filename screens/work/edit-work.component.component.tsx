@@ -10,12 +10,10 @@ import {
 } from "@ui-kitten/components";
 import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
 import { ArrowIosBackIcon } from "@/components/atoms/icons";
+import { useNavigation } from "expo-router";
 
-export const EditWorkScreen = ({
-  navigation,
-}: {
-  navigation: any;
-}): React.ReactElement => {
+export const EditWorkScreen = (): React.ReactElement => {
+  const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
 
   const renderBackAction = (): React.ReactElement => (

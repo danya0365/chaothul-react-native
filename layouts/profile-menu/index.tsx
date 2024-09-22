@@ -1,6 +1,5 @@
 import LoadingView from "@/components/organisms/loading.view";
 import useAuth from "@/hooks/auth";
-import { UserProfile } from "@/models/user-profile";
 import { AuthApiService } from "@/services/api.service";
 import {
   Avatar,
@@ -8,7 +7,6 @@ import {
   Text,
   useStyleSheet,
 } from "@ui-kitten/components";
-import { AxiosError } from "axios";
 import React from "react";
 import {
   ImageStyle,
@@ -18,10 +16,7 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { useDispatch } from "react-redux";
-import httpRequest, {
-  ApiErrorResponse,
-} from "../../services/http-request.service";
+import httpRequest from "../../services/http-request.service";
 import { PinIcon } from "./extra/icons";
 import { ImageOverlay } from "./extra/image-overlay.component";
 import { ProfileMenuItem } from "./extra/profile-menu-item.component";

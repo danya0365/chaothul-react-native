@@ -5,6 +5,7 @@ import { SearchBox } from "./search-box.component";
 import { LatestWork } from "./latest-work.component";
 import { FilterByProvince } from "./filter-by-province.component";
 import { TopWork } from "./top-work.component";
+import { useNavigation } from "expo-router";
 
 const DATA = [
   {
@@ -29,7 +30,8 @@ const DATA = [
   },
 ];
 
-export default ({ navigation }): React.ReactElement => {
+export default (): React.ReactElement => {
+  const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -42,30 +44,16 @@ export default ({ navigation }): React.ReactElement => {
 
   const renderItem = ({ item }): React.ReactElement => {
     if (item.itemType == "search") {
-      return <SearchBox key={`search-box`} navigation={navigation} />;
+      return <SearchBox key={`search-box`} />;
     }
     if (item.itemType == "latestWork") {
-      return (
-        <LatestWork
-          key={`latest-work`}
-          navigation={navigation}
-          refreshFlag={refreshing}
-        />
-      );
+      return <LatestWork key={`latest-work`} refreshFlag={refreshing} />;
     }
     if (item.itemType == "filterByProvince") {
-      return (
-        <FilterByProvince key={`filter-by-province`} navigation={navigation} />
-      );
+      return <FilterByProvince key={`filter-by-province`} />;
     }
     if (item.itemType == "topWork") {
-      return (
-        <TopWork
-          key={`top-work`}
-          navigation={navigation}
-          refreshFlag={refreshing}
-        />
-      );
+      return <TopWork key={`top-work`} refreshFlag={refreshing} />;
     }
     return <></>;
   };
