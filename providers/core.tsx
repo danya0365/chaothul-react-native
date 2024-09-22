@@ -9,6 +9,7 @@ import ThemeProvider from "./theme";
 import ConfigProvider from "./config";
 import { Theme } from "@/types/theme";
 import AuthProvider from "./auth";
+import { AppIconsPack } from "@/components/atoms/app-icons-pack";
 
 export type Props = {
   children?: React.ReactNode;
@@ -19,7 +20,7 @@ const CoreProvider: React.FC<Props> = ({ children, theme }) => {
   return (
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <IconRegistry icons={[EvaIconsPack]} />
+        <IconRegistry icons={[EvaIconsPack, AppIconsPack]} />
         <ThemeProvider theme={theme}>
           <SafeAreaProvider>
             <ConfigProvider>

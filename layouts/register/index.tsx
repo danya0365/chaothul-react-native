@@ -88,7 +88,6 @@ export default (): React.ReactElement => {
       if (response.status) {
         const token = response.data.token;
         const user = response.data.user;
-        const permission = response.data.permission;
         setBearerToken(token);
         dispatch(
           loginSuccess({
@@ -96,9 +95,7 @@ export default (): React.ReactElement => {
           })
         );
         dispatch(setUser(UserProfile.createFromApi(user)));
-        // TODO:
-        router.push("/todo");
-        //navigation && navigation.dispatch(StackActions.popToTop());
+        router.push("/(app)/(root)/(bottom-tab)/profile-menu");
       } else {
         showErrorMessage(response.message ?? "");
       }

@@ -1,9 +1,11 @@
 import { ImageSourcePropType } from "react-native";
 import { Json } from "./json";
 import { Permission } from "./permission.model";
+import { UserRole } from "./user-role";
 
 export class UserProfile {
   public permissions: Permission[] = [];
+  public roles: UserRole[] = [];
   constructor(
     readonly id: string,
     readonly firstName: string,
@@ -37,6 +39,9 @@ export class UserProfile {
       json.profile_image,
       json.location
     );
+    obj.roles = json.roles
+      ? json.roles.map((val: Json) => UserRole.createFromApi(val))
+      : [];
     obj.permissions = json.permissions
       ? json.permissions.map((val: Json) => Permission.createFromApi(val))
       : [];
@@ -48,8 +53,8 @@ export class UserProfile {
       user.id,
       user.firstName,
       user.lastName,
-      user.photo,
       user.email,
+      user.photo,
       user.location
     );
   }

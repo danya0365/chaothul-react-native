@@ -7,7 +7,7 @@ import {
   Text,
   useStyleSheet,
 } from "@ui-kitten/components";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ImageStyle,
   LogBox,
@@ -60,6 +60,10 @@ export default (): React.ReactElement => {
       doRequestProfile(() => {});
     }, 500);
   }, [token]);
+
+  useEffect(() => {
+    console.log("user profile", user);
+  }, [user]);
 
   return (
     <>

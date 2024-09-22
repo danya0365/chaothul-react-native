@@ -1,22 +1,7 @@
-import React, { ReactElement } from "react";
-import { View, TouchableWithoutFeedback, NativeModules } from "react-native";
-import {
-  Button,
-  Input,
-  Layout,
-  StyleService,
-  Text,
-  useStyleSheet,
-  Icon,
-  Modal,
-  Card,
-} from "@ui-kitten/components";
-import { useDispatch, useSelector } from "react-redux";
-import { PersonIcon } from "./extra/icons";
-import { StackActions } from "@react-navigation/native";
-import httpRequest from "../../services/http-request.service";
-import { AuthApiService } from "../../services/api.service";
-import { router } from "expo-router";
+import { KeyboardAvoidingView } from "@/components/atoms/keyboard-avoiding-view.component";
+import AlertModalComponent from "@/components/molecules/alert-modal.component";
+import LoadingView from "@/components/organisms/loading.view";
+import { UserProfile } from "@/models/user-profile";
 import { useAppSelector } from "@/store/hooks";
 import {
   authStart,
@@ -24,10 +9,21 @@ import {
   loginSuccess,
   setUser,
 } from "@/store/reducer/auth-reducer";
-import { UserProfile } from "@/models/user-profile";
-import { KeyboardAvoidingView } from "@/components/atoms/keyboard-avoiding-view.component";
-import AlertModalComponent from "@/components/molecules/alert-modal.component";
-import LoadingView from "@/components/organisms/loading.view";
+import {
+  Button,
+  Icon,
+  Input,
+  Layout,
+  StyleService,
+  useStyleSheet,
+} from "@ui-kitten/components";
+import { router } from "expo-router";
+import React, { ReactElement } from "react";
+import { TouchableWithoutFeedback, View } from "react-native";
+import { useDispatch } from "react-redux";
+import { AuthApiService } from "../../services/api.service";
+import httpRequest from "../../services/http-request.service";
+import { PersonIcon } from "./extra/icons";
 
 export default (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -54,9 +50,7 @@ export default (): React.ReactElement => {
           })
         );
         dispatch(setUser(UserProfile.createFromApi(user)));
-        // TODO:
-        router.push("/todo");
-        //navigation && navigation.dispatch(StackActions.popToTop());
+        router.push("/(app)/(root)/(bottom-tab)/profile-menu");
       } else {
         dispatch(loginFailure(response.message ?? ""));
         setModalVisible(true);
@@ -69,9 +63,7 @@ export default (): React.ReactElement => {
   };
 
   const onSignUpButtonPress = (): void => {
-    // TODO:
-    router.push("/todo");
-    //navigation && navigation.navigate("Register Screen");
+    router.push("/auth/register");
   };
 
   const onSignInButtonPress = (): void => {
@@ -101,9 +93,7 @@ export default (): React.ReactElement => {
 
   React.useEffect(() => {
     if (token) {
-      // TODO:
-      router.push("/todo");
-      //navigation && navigation.dispatch(StackActions.popToTop());
+      router.push("/(app)/(root)/(bottom-tab)/profile-menu");
     }
   }, []);
 
