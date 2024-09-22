@@ -1,0 +1,46 @@
+{
+  "cli": {
+    "version": ">= 3.13.3",
+    "promptToConfigurePushNotifications": false
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "APP_ENVIRONMENT": "development",
+        "APP_IOS_BUNDLE_ID": "com.sbey.royaltyrewardapp-dev",
+        "APP_ANDROID_PACKAGE": "com.sbey.royaltyrewardapp_dev",
+        "API_URL": "https://sroyaltyapp.thaiacegroup.com/api",
+        "PUBLIC_URL": "https://sroyaltyapp.thaiacegroup.com"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "APP_ENVIRONMENT": "preview",
+        "APP_IOS_BUNDLE_ID": "com.sbey.royaltyrewardapp-preview",
+        "APP_ANDROID_PACKAGE": "com.sbey.royaltyrewardapp_preview",
+        "API_URL": "https://sroyaltyapp.thaiacegroup.com/api",
+        "PUBLIC_URL": "https://sroyaltyapp.thaiacegroup.com"
+      }
+    },
+    "production": {
+      "env": {
+        "APP_ENVIRONMENT": "production",
+        "APP_IOS_BUNDLE_ID": "com.sbey.royaltyrewardapp",
+        "APP_ANDROID_PACKAGE": "com.sbey.royaltyrewardapp",
+        "API_URL": "https://sroyaltyapp.thaiacegroup.com/api",
+        "PUBLIC_URL": "https://sroyaltyapp.thaiacegroup.com"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "./thai-ace-group-9d663a0f0753.json",
+        "track": "internal"
+      }
+    }
+  }
+}
