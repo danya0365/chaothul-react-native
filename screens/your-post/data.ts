@@ -31,8 +31,8 @@ export const workOrRecruitData: LayoutData[] = [
     icon: (style: ImageStyle) => {
       return React.createElement(ThemedIcon, {
         ...style,
-        light: AssetSocialIcon,
-        dark: AssetSocialDarkIcon,
+        light: AssetArticlesIcon,
+        dark: AssetArticlesDarkIcon,
       });
     },
   },
