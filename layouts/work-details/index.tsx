@@ -1,3 +1,7 @@
+import { MessageCircleIcon } from "@/components/atoms/icons";
+import LoadingView from "@/components/organisms/loading.view";
+import { Work } from "@/models/work.model";
+import { useAppSelector } from "@/store/hooks";
 import {
   Avatar,
   Button,
@@ -7,6 +11,7 @@ import {
   Text,
   useStyleSheet,
 } from "@ui-kitten/components";
+import { router } from "expo-router";
 import React from "react";
 import {
   Image,
@@ -18,9 +23,6 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { useSelector } from "react-redux";
-import { MessageCircleIcon } from "@/components/atoms/icons";
-import { Work } from "@/models/work.model";
 import { MeApiService, WorkApiService } from "../../services/api.service";
 import httpRequest, {
   ApiErrorResponse,
@@ -29,9 +31,6 @@ import ReviewList from "../review-list";
 import BookingCalendarComponent from "./extra/booking-calendar.component";
 import { ImageOverlay } from "./extra/image-overlay.component";
 import LikeButtonComponent from "./extra/like-button.component";
-import { router } from "expo-router";
-import { useAppSelector } from "@/store/hooks";
-import LoadingView from "@/components/organisms/loading.view";
 
 interface Props {
   workId: number;
@@ -42,7 +41,7 @@ export default ({ workId, onWorkInfoReady }: Props): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
   const workApiService = new WorkApiService(httpRequest);
   const meApiService = new MeApiService(httpRequest);
-  const { token, user } = useAppSelector((state) => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
   const [isCanManageWork, setIsCanManageWork] = React.useState(false);
 
   const [refreshing, setRefreshing] = React.useState(false);
@@ -52,23 +51,15 @@ export default ({ workId, onWorkInfoReady }: Props): React.ReactElement => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const onBookButtonPress = (): void => {
-    if (!token) {
-      // TODO:
-      router.push("/todo");
-      //navigation.navigate("Login Screen");
+    if (!user) {
+      router.push("/auth/login");
       return;
     }
     if (isCanManageWork) {
-      // TODO:
-      router.push("/todo");
-      // navigation &&
-      //   navigation.navigate("Work Booking List Screen", { work: workInfo });
+      router.push(`/work/${workId}/work-booking-list`);
       return;
     }
-    // TODO:
-    router.push("/todo");
-    // navigation &&
-    //   navigation.navigate("Work Booking Screen", { work: workInfo });
+    router.push(`/work/${workId}/create-booking`);
   };
 
   const getIsUserLikeWork = async () => {
@@ -176,7 +167,7 @@ export default ({ workId, onWorkInfoReady }: Props): React.ReactElement => {
       onWorkInfoReady(workInfo);
     }
 
-    if (token && workInfo?.author?.id == user?.id) {
+    if (user && workInfo?.author?.id == user?.id) {
       setIsCanManageWork(true);
     } else {
       setIsCanManageWork(false);
@@ -268,9 +259,9 @@ export default ({ workId, onWorkInfoReady }: Props): React.ReactElement => {
             </View>
           </Card>
           <View style={styles.itemFooter}>
-            <Avatar source={workInfo.author.photoUrl} />
+            <Avatar source={workInfo.author?.photoUrl} />
             <View style={styles.itemAuthoringContainer}>
-              <Text category="s2">{workInfo.author.fullName}</Text>
+              <Text category="s2">{workInfo.author?.fullName}</Text>
               <Text appearance="hint" category="c1">
                 {workInfo.formattedDate}
               </Text>

@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import { RecruitBooking } from "@/models/recruit-booking.model";
+import { useNavigation } from "@react-navigation/native";
 import {
   Avatar,
   ListItem,
@@ -7,10 +7,10 @@ import {
   Text,
   useTheme,
 } from "@ui-kitten/components";
-import { DoneAllIcon } from "./icons";
-import { useNavigation } from "@react-navigation/native";
-import { RecruitBooking } from "@/models/recruit-booking.model";
 import { router } from "expo-router";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { DoneAllIcon } from "./icons";
 
 export type NotificationItemProps = ListItemProps & {
   recruitBooking: RecruitBooking;
@@ -40,13 +40,7 @@ export const WorkBookingItem = (
   );
 
   const onItemPress = () => {
-    console.log("recruitBooking", recruitBooking);
-    // TODO:
-    router.push("/todo");
-    // navigation &&
-    //   navigation.navigate("Recruit Booking Detail Screen", {
-    //     workBooking: workBooking,
-    //   });
+    router.push(`/recruit-booking/${recruitBooking.id}`);
   };
 
   return (

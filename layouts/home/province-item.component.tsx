@@ -1,14 +1,14 @@
-import React from "react";
-import { TouchableHighlight } from "react-native";
+import { Province } from "@/models/province.model";
 import {
   Layout,
   StyleService,
   Text,
   useStyleSheet,
 } from "@ui-kitten/components";
-import { ImageOverlay } from "./image-overlay.component";
 import { router } from "expo-router";
-import { Province } from "@/models/province.model";
+import React from "react";
+import { TouchableHighlight } from "react-native";
+import { ImageOverlay } from "./image-overlay.component";
 
 interface Props {
   item: Province;
@@ -24,16 +24,7 @@ export const ProvinceItem = ({
   const styles = useStyleSheet(themedStyles);
 
   const onItemPress = (): void => {
-    // TODO:
-    router.push("/todo");
-    // navigation &&
-    //   navigation.navigate("Search Screen", {
-    //     q: {
-    //       keyword: null,
-    //       province: Province,
-    //       date: null,
-    //     },
-    //   });
+    router.push({ pathname: "/search-work", params: { provinceId: item.key } });
   };
 
   return (

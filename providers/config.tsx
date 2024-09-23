@@ -131,6 +131,8 @@ const ConfigProvider: React.FC<Props> = (props) => {
         if (notification.updatedAt != lastNotificationUpdate) {
           dispatch(setIsNewNotification(true));
         }
+      } else {
+        dispatch(setIsNewNotification(false));
       }
     } catch (error) {
       console.log("getLastUpdateNotification error:", error);

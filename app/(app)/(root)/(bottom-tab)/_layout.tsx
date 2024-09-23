@@ -22,7 +22,7 @@ import { Animated, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FavouriteScreen from "./favourite";
 import HomesScreen from "./home";
-import NotificationScreen from "./notification";
+import UserNotificationScreen from "./user-notification";
 import ProfileMenuScreen from "./profile-menu";
 import SelectPostScreen from "./select-post";
 
@@ -158,7 +158,10 @@ const BottomTabNavigator = (): React.ReactElement => {
       <BottomTab.Screen name="home" component={HomesScreen} />
       <BottomTab.Screen name="favourite" component={FavouriteScreen} />
       <BottomTab.Screen name="select-post" component={SelectPostScreen} />
-      <BottomTab.Screen name="notification" component={NotificationScreen} />
+      <BottomTab.Screen
+        name="user-notification"
+        component={UserNotificationScreen}
+      />
       <BottomTab.Screen name="profile-menu" component={ProfileMenuScreen} />
     </BottomTab.Navigator>
   );

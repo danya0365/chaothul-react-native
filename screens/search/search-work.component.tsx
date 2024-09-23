@@ -18,7 +18,7 @@ import httpRequest, {
   ApiDataListResponse,
 } from "../../services/http-request.service";
 
-export const SearchScreen = (): React.ReactElement => {
+export const SearchWorkScreen = (): React.ReactElement => {
   const navigation = useNavigation();
   const { keyword, provinceId, date } = useLocalSearchParams<{
     keyword: string;

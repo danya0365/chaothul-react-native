@@ -1,17 +1,18 @@
+import LoadingView from "@/components/organisms/loading.view";
+import useWork from "@/hooks/work";
+import { WorkBooking } from "@/models/work-booking.model";
+import { List, StyleService, useStyleSheet } from "@ui-kitten/components";
+import { useNavigation } from "expo-router";
 import React from "react";
 import { ListRenderItemInfo, RefreshControl } from "react-native";
-import { List, StyleService, useStyleSheet } from "@ui-kitten/components";
-import { WorkBookingItem } from "./extra/work-booking-item.component";
-import httpRequest from "../../services/http-request.service";
 import { MeApiService } from "../../services/api.service";
-import { WorkBooking } from "@/models/work-booking.model";
-import { useNavigation } from "expo-router";
-import LoadingView from "@/components/organisms/loading.view";
+import httpRequest from "../../services/http-request.service";
+import { WorkBookingItem } from "./extra/work-booking-item.component";
 
 export default (): React.ReactElement => {
   const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
-  const [workBookings, setWorkBookings] = React.useState<WorkBooking[]>([]);
+  const { workBookings, setWorkBookings } = useWork();
   const meApiService = new MeApiService(httpRequest);
   const [refreshing, setRefreshing] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);

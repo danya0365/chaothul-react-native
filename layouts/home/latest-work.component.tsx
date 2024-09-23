@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { View, FlatList } from "react-native";
-import debounce from "lodash/debounce";
+import { Work } from "@/models/work.model";
 import {
   Button,
   Layout,
@@ -8,13 +6,15 @@ import {
   Text,
   useStyleSheet,
 } from "@ui-kitten/components";
-import { LatestWorkItem } from "./latest-work-item.component";
+import { AxiosResponse } from "axios";
+import { router } from "expo-router";
+import debounce from "lodash/debounce";
+import React, { useState } from "react";
+import { FlatList, View } from "react-native";
 import httpRequest, {
   ApiDataListResponse,
 } from "../../services/http-request.service";
-import { AxiosResponse } from "axios";
-import { router } from "expo-router";
-import { Work } from "@/models/work.model";
+import { LatestWorkItem } from "./latest-work-item.component";
 
 interface Props {
   refreshFlag: boolean;
@@ -48,9 +48,7 @@ export const LatestWork = ({ refreshFlag }: Props): React.ReactElement => {
   }, 500);
 
   const onButtonPress = () => {
-    // TODO:
-    router.push("/todo");
-    //navigation && navigation.navigate("Latest Work Screen");
+    router.push("/latest-work");
   };
 
   React.useEffect(() => {

@@ -17,8 +17,27 @@ export default function AppLayout() {
       <Stack.Screen name="term" options={{ headerShown: false }} />
       <Stack.Screen name="about-us" options={{ headerShown: false }} />
       <Stack.Screen name="payment" options={{ headerShown: false }} />
+      <Stack.Screen name="latest-work" options={{ headerShown: false }} />
+      <Stack.Screen name="search-work" options={{ headerShown: false }} />
       <Stack.Screen name="work/[id]" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="work/[id]/work-booking-list"
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="work/[id]/create-booking"
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="work-booking/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="recruit/[id]" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="recruit/[id]/recruit-booking-list"
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="recruit/[id]/create-booking"
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="landing"
         options={{
@@ -45,6 +64,12 @@ export default function AppLayout() {
       />
       <Stack.Screen
         name="auth/register"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="auth/forgot-password"
         options={{
           headerShown: false,
         }}

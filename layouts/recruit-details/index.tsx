@@ -1,12 +1,7 @@
-import React from "react";
-import {
-  Image,
-  ImageSourcePropType,
-  ListRenderItemInfo,
-  RefreshControl,
-  ScrollView,
-  View,
-} from "react-native";
+import LoadingView from "@/components/organisms/loading.view";
+import { Recruit } from "@/models/recruit.model";
+import { MeApiService, RecruitApiService } from "@/services/api.service";
+import { useAppSelector } from "@/store/hooks";
 import {
   Avatar,
   Button,
@@ -16,12 +11,18 @@ import {
   Text,
   useStyleSheet,
 } from "@ui-kitten/components";
-import { ImageOverlay } from "./extra/image-overlay.component";
-import httpRequest from "../../services/http-request.service";
-import { RecruitApiService } from "@/services/api.service";
-import { Recruit } from "@/models/recruit.model";
 import { router } from "expo-router";
-import LoadingView from "@/components/organisms/loading.view";
+import React from "react";
+import {
+  Image,
+  ImageSourcePropType,
+  ListRenderItemInfo,
+  RefreshControl,
+  ScrollView,
+  View,
+} from "react-native";
+import httpRequest from "../../services/http-request.service";
+import { ImageOverlay } from "./extra/image-overlay.component";
 
 interface Props {
   recruitId: number;
@@ -34,15 +35,23 @@ export default ({
 }: Props): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
   const recruitApiService = new RecruitApiService(httpRequest);
+  const meApiService = new MeApiService(httpRequest);
+  const { user } = useAppSelector((state) => state.auth);
   const [refreshing, setRefreshing] = React.useState(false);
   const [recruitInfo, setRecruitInfo] = React.useState<Recruit>();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isCanManageRecruit, setIsCanManageRecruit] = React.useState(false);
 
   const onBookButtonPress = (): void => {
-    // TODO:
-    router.push("/todo");
-    // navigation &&
-    //   navigation.navigate("Recruit Booking Screen", { recruit: recruitInfo });
+    if (!user) {
+      router.push("/auth/login");
+      return;
+    }
+    if (isCanManageRecruit) {
+      router.push(`/recruit/${recruitId}/recruit-booking-list`);
+      return;
+    }
+    router.push(`/recruit/${recruitId}/create-booking`);
   };
 
   const doRequestRecruitDetail = async (callback: () => void) => {
@@ -80,6 +89,12 @@ export default ({
 
   React.useEffect(() => {
     if (recruitInfo) onRecruitInfoReady(recruitInfo);
+
+    if (user && recruitInfo?.author?.id == user?.id) {
+      setIsCanManageRecruit(true);
+    } else {
+      setIsCanManageRecruit(false);
+    }
   }, [recruitInfo]);
 
   const renderImageItem = (
@@ -127,7 +142,7 @@ export default ({
                 {recruitInfo.formattedBudget}
               </Text>
               <Button style={styles.bookButton} onPress={onBookButtonPress}>
-                จองเลย
+                {isCanManageRecruit ? `ดูรายการจอง` : `จองเลย`}
               </Button>
             </View>
           </Card>

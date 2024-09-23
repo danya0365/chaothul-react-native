@@ -8,18 +8,16 @@ import {
   TopNavigation,
   useStyleSheet,
 } from "@ui-kitten/components";
+import { router } from "expo-router";
 import React from "react";
 import { data } from "./data";
-import { router } from "expo-router";
 
 export const SelectPostScreen = (): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
   const { token } = useAppSelector((state) => state.auth);
 
   const onItemPress = (index: number): void => {
-    // TODO:
     router.push(data[index].route);
-    //navigation.navigate(data[index].route);
   };
 
   return (

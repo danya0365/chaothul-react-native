@@ -8,10 +8,10 @@ import {
   useStyleSheet,
 } from "@ui-kitten/components";
 import React from "react";
-import NotificationList from "../../layouts/notification-list";
+import NotificationList from "../../layouts/user-notification-list";
 import { useNavigation } from "expo-router";
 
-export const NotificationScreen = (): React.ReactElement => {
+export const UserNotificationScreen = (): React.ReactElement => {
   const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
   const { token } = useAppSelector((state) => state.auth);

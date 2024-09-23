@@ -7,11 +7,12 @@ import {
   TopNavigationAction,
   useStyleSheet,
 } from "@ui-kitten/components";
+import MeRecruitBookingList from "../../layouts/my-recruit-booking-list";
 import { useNavigation } from "expo-router";
 import { ArrowIosBackIcon } from "@/components/atoms/icons";
 import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
 
-export const RecruitBookingsScreen = (): React.ReactElement => {
+export const MyRecruitBookingListScreen = (): React.ReactElement => {
   const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
   const renderBackAction = (): React.ReactElement => (
@@ -20,9 +21,12 @@ export const RecruitBookingsScreen = (): React.ReactElement => {
 
   return (
     <SafeAreaLayoutView style={styles.safeArea} insets="top">
-      <TopNavigation title={`ทำการจอง`} accessoryLeft={renderBackAction} />
+      <TopNavigation
+        title={`รายการจองหางาน`}
+        accessoryLeft={renderBackAction}
+      />
       <Divider />
-      <Text>ทำการจอง</Text>
+      <MeRecruitBookingList />
     </SafeAreaLayoutView>
   );
 };

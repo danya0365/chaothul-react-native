@@ -1,22 +1,21 @@
+import { WorkBookingFormData } from "@/form-data/work-booking.form-data";
 import {
   MessengerConversation,
   MessengerConversationType,
 } from "@/models/messenger-conversation";
 import { AxiosInstance } from "axios";
+import moment from "moment";
 import httpRequest, {
   ApiBooleanResponse,
   ApiDataListResponse,
   ApiDataObjectResponse,
   ApiLoginResponse,
   ApiNumberResponse,
-  ApiRegisterLoginResponse,
   ApiRegisterResponse,
   ApiResponse,
   ApiTextResponse,
   ApiUploadResponse,
 } from "./http-request.service";
-import { WorkBookingFormData } from "@/form-data/work-booking.form-data";
-import moment from "moment";
 
 export class ApiService {
   request: AxiosInstance;
@@ -70,11 +69,13 @@ export class AuthApiService extends ApiService {
     password,
     firstName,
     lastName,
+    profileImage,
   }: {
     email: string;
     password: string;
     firstName: string;
     lastName: string;
+    profileImage?: string;
   }): Promise<ApiRegisterResponse> {
     const formData = new FormData();
     formData.append("name", email.split("@").shift() || "");
@@ -83,6 +84,7 @@ export class AuthApiService extends ApiService {
     formData.append("password_confirmation", password);
     formData.append("first_name", firstName);
     formData.append("last_name", lastName);
+    formData.append("profile_image", profileImage ?? "");
 
     const response = await this.request.post(`/auth/register`, formData, {
       headers: {

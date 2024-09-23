@@ -62,16 +62,13 @@ export default (): React.ReactElement => {
     }
   };
 
-  const onSignUpButtonPress = (): void => {
-    router.push("/auth/register");
+  const onSubmitButtonPress = (): void => {
+    //router.push("/auth/register");
+    //
   };
 
   const onSignInButtonPress = (): void => {
-    if (!loading) doRequestLogin();
-  };
-
-  const onForgotPasswordButtonPress = (): void => {
-    router.push("/auth/forgot-password");
+    router.push("/auth/login");
   };
 
   const onPasswordIconPress = (): void => {
@@ -107,39 +104,21 @@ export default (): React.ReactElement => {
             autoCorrect={false}
             autoCapitalize="none"
           />
-          <Input
-            style={styles.passwordInput}
-            placeholder="รหัสผ่าน"
-            accessoryRight={renderPasswordIcon}
-            value={password}
-            secureTextEntry={!passwordVisible}
-            onChangeText={setPassword}
-          />
-          <View style={styles.forgotPasswordContainer}>
-            <Button
-              style={styles.forgotPasswordButton}
-              appearance="ghost"
-              status="basic"
-              onPress={onForgotPasswordButtonPress}
-            >
-              ลืมรหัสผ่าน
-            </Button>
-          </View>
         </Layout>
         <Button
           style={styles.signInButton}
           size="giant"
-          onPress={onSignInButtonPress}
+          onPress={onSubmitButtonPress}
         >
-          เข้าสู่ระบบ
+          ยันยัน
         </Button>
         <Button
           style={styles.signUpButton}
           appearance="ghost"
           status="basic"
-          onPress={onSignUpButtonPress}
+          onPress={onSignInButtonPress}
         >
-          ยังไม่มีบัญชี?, สมัครเลย
+          จำรหัสผ่านได้แล้ว?, เข้าสู่ระบบ
         </Button>
       </KeyboardAvoidingView>
       <AlertModalComponent
@@ -147,7 +126,7 @@ export default (): React.ReactElement => {
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
       />
-      {loading && <LoadingView onDismissPress={() => {}} />}
+      {loading && <LoadingView />}
     </View>
   );
 };
@@ -166,6 +145,8 @@ const themedStyles = StyleService.create({
     flex: 1,
     paddingTop: 32,
     paddingHorizontal: 16,
+    marginVertical: 16,
+    gap: 16,
   },
   signInLabel: {
     marginTop: 16,

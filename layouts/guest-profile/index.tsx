@@ -13,15 +13,11 @@ export default (): React.ReactElement => {
   const styles = useStyleSheet(themedStyle);
 
   const onLoginButtonPress = (): void => {
-    // TODO:
-    router.push("/todo");
-    //navigation && navigation.navigate("Login Screen");
+    router.push("/auth/login");
   };
 
   const onRegisterButtonPress = (): void => {
-    // TODO:
-    router.push("/todo");
-    //navigation && navigation.navigate("Register Screen");
+    router.push("/auth/register");
   };
 
   return (

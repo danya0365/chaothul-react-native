@@ -1,5 +1,4 @@
-import useAuth from "@/hooks/auth";
-import { Redirect, Stack } from "expo-router";
+import { Stack } from "expo-router";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -45,6 +44,14 @@ export default function RootLayout() {
         <Stack.Screen name="your-works" options={{ headerShown: false }} />
         <Stack.Screen name="new-recruit" options={{ headerShown: false }} />
         <Stack.Screen name="new-work" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="my-recruit-bookings"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="my-work-bookings"
+          options={{ headerShown: false }}
+        />
       </Stack>
     </>
   );

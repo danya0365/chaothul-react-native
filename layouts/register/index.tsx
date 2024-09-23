@@ -46,9 +46,7 @@ export default (): React.ReactElement => {
   };
 
   const onSignInButtonPress = (): void => {
-    // TODO:
-    router.push("/todo");
-    // navigation && navigation.navigate("Login Screen");
+    router.push("/auh/login");
   };
 
   const onPasswordIconPress = (): void => {

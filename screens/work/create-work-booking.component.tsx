@@ -1,21 +1,20 @@
-import React from "react";
+import { ArrowIosBackIcon } from "@/components/atoms/icons";
+import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
+import useAuth from "@/hooks/auth";
+import { WorkApiService } from "@/services/api.service";
+import httpRequest from "@/services/http-request.service";
 import {
   Divider,
-  Text,
   StyleService,
   TopNavigation,
   TopNavigationAction,
   useStyleSheet,
 } from "@ui-kitten/components";
-import WorkBooking from "../../layouts/work-booking";
-import useAuth from "@/hooks/auth";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { ArrowIosBackIcon } from "@/components/atoms/icons";
-import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
-import { WorkApiService } from "@/services/api.service";
-import httpRequest from "@/services/http-request.service";
+import React from "react";
+import WorkBooking from "../../layouts/create-work-booking";
 
-export const WorkBookingsScreen = (): React.ReactElement => {
+export const CreateWorkBookingScreen = (): React.ReactElement => {
   const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
   const workApiService = new WorkApiService(httpRequest);

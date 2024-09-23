@@ -1,7 +1,14 @@
-import React from "react";
-import { StyleSheet, View, ViewStyle } from "react-native";
 import {
-  Avatar,
+  BookmarkIcon,
+  BookmarkOutlineIcon,
+  HeartIcon,
+  MessageCircleIcon,
+} from "@/components/atoms/icons";
+import {
+  UserNotification,
+  UserNotificationType,
+} from "@/models/user-notification.model";
+import {
   ListItem,
   ListItemProps,
   StyleService,
@@ -9,20 +16,10 @@ import {
   useStyleSheet,
   useTheme,
 } from "@ui-kitten/components";
-import { DoneAllIcon } from "./icons";
-import {
-  UserNotification,
-  UserNotificationType,
-} from "@/models/user-notification.model";
-import {
-  AlertTriangleIcon,
-  AlertTriangleOutlineIcon,
-  BookmarkIcon,
-  BookmarkOutlineIcon,
-  HeartIcon,
-  MessageCircleIcon,
-} from "@/components/atoms/icons";
 import { router } from "expo-router";
+import React from "react";
+import { View } from "react-native";
+import { DoneAllIcon } from "./icons";
 
 export type NotificationItemProps = ListItemProps & {
   userNotification: UserNotification;

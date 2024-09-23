@@ -25,19 +25,16 @@ export const RecruitDetailScreen = (): React.ReactElement => {
     if (!isCanManageRecruit) return <></>;
     return (
       <TopNavigationAction
-        icon={ArrowIosBackIcon}
-        onPress={navigation.goBack}
+        icon={EditIcon}
+        onPress={() => {
+          console.log("แก้ไขการรับงาน");
+        }}
       />
     );
   };
 
   const renderBackAction = (): React.ReactElement => (
-    <TopNavigationAction
-      icon={EditIcon}
-      onPress={() => {
-        console.log("แก้ไขการรับงาน");
-      }}
-    />
+    <TopNavigationAction icon={ArrowIosBackIcon} onPress={navigation.goBack} />
   );
 
   const onRecruitInfoReady = (recruitInfo: Recruit) => {

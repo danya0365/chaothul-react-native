@@ -1,20 +1,19 @@
-import React from "react";
+import { ArrowIosBackIcon } from "@/components/atoms/icons";
+import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
 import {
   Divider,
-  Text,
   StyleService,
   TopNavigation,
   TopNavigationAction,
   useStyleSheet,
 } from "@ui-kitten/components";
-import MeWorkBookingList from "../../layouts/me-work-booking-list";
-import { ArrowIosBackIcon } from "@/components/atoms/icons";
-import { useNavigation } from "expo-router";
-import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import React from "react";
 
-export const MeWorkBookingListScreen = (): React.ReactElement => {
+export const RecruitBookingListScreen = (): React.ReactElement => {
   const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
+  const { id: workId } = useLocalSearchParams<{ id: string }>();
   const renderBackAction = (): React.ReactElement => (
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={navigation.goBack} />
   );
@@ -22,11 +21,10 @@ export const MeWorkBookingListScreen = (): React.ReactElement => {
   return (
     <SafeAreaLayoutView style={styles.safeArea} insets="top">
       <TopNavigation
-        title={`รายการจองรับงาน`}
+        title={`รายการจองทั้งหมด`}
         accessoryLeft={renderBackAction}
       />
       <Divider />
-      <MeWorkBookingList />
     </SafeAreaLayoutView>
   );
 };

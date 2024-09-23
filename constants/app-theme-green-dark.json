@@ -16,6 +16,16 @@
   "color-primary-800": "#932200",
   "color-primary-900": "#791500",
 
+  "color-secondary-100": "#DCFCDA",
+  "color-secondary-200": "#B5F9B7",
+  "color-secondary-300": "#8DEF99",
+  "color-secondary-400": "#6DDF86",
+  "color-secondary-500": "#41CA6D",
+  "color-secondary-600": "#2FAD64",
+  "color-secondary-700": "#20915B",
+  "color-secondary-800": "#147550",
+  "color-secondary-900": "#0C6048",
+
   "color-success-100": "#D1FDD2",
   "color-success-200": "#A3FCAE",
   "color-success-300": "#75F892",

@@ -13,9 +13,9 @@ export class Recruit {
     readonly images: ImageSourcePropType[],
     readonly budget: number,
     readonly date: Date,
-    readonly province?: Province,
-    readonly workType?: WorkType,
-    readonly author?: UserProfile,
+    readonly province: Province | null,
+    readonly workType: WorkType | null,
+    readonly author: UserProfile | null,
     readonly isSync?: boolean,
     readonly displayPriority: number = 0
   ) {}
@@ -50,9 +50,9 @@ export class Recruit {
       images,
       recruit?.budget,
       new Date(recruit?.created_at),
-      Province.createFromApi(recruit?.province) ?? undefined,
-      WorkType.createFromApi(recruit?.workType) ?? undefined,
-      UserProfile.createFromApi(recruit?.author) ?? undefined,
+      recruit?.province ? Province.createFromApi(recruit?.province) : null,
+      recruit?.work_type ? WorkType.createFromApi(recruit?.work_type) : null,
+      recruit?.author ? UserProfile.createFromApi(recruit?.author) : null,
       true
     );
   }

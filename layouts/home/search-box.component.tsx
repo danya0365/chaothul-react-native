@@ -1,5 +1,6 @@
-import React, { useMemo } from "react";
-import { View, StyleSheet } from "react-native";
+import { CalendarIcon, SearchIcon } from "@/components/atoms/icons";
+import { Province } from "@/models/province.model";
+import { useAppSelector } from "@/store/hooks";
 import {
   Button,
   Card,
@@ -14,9 +15,9 @@ import {
   Text,
 } from "@ui-kitten/components";
 import { router } from "expo-router";
-import { Province } from "@/models/province.model";
-import { useAppSelector } from "@/store/hooks";
-import { CalendarIcon, SearchIcon } from "@/components/atoms/icons";
+import moment from "moment";
+import React, { useMemo } from "react";
+import { StyleSheet, View } from "react-native";
 
 const useInputState = (initialValue = ""): InputProps => {
   const [value, setValue] = React.useState(initialValue);
@@ -32,13 +33,21 @@ export interface SearchParam {
 export const SearchBox = (): React.ReactElement => {
   const { provinces } = useAppSelector((state) => state.app);
   const searchKeywordInputState = useInputState();
-  const [selectedIndex, setSelectedIndex] = React.useState<IndexPath>(
-    new IndexPath(0)
-  );
+  const [provinceSelectedIndex, setProvinceSelectedIndex] =
+    React.useState<IndexPath>(new IndexPath(0));
   const [date, setDate] = React.useState();
+
+  const getProvinceSelected = (): Province => {
+    return provinces![provinceSelectedIndex.row] ?? null;
+  };
+
+  const provinceSelectedDisplayValue = getProvinceSelected();
+
   const displayValue = useMemo(() => {
-    provinces ? provinces[selectedIndex.row] : new Province("0", "ทั้งหมด");
-  }, [provinces, selectedIndex]);
+    provinces
+      ? provinces[provinceSelectedIndex.row]
+      : new Province("0", "ทั้งหมด");
+  }, [provinces, provinceSelectedIndex]);
 
   return (
     <Layout style={styles.container} key={`search-box-body`}>
@@ -70,9 +79,12 @@ export const SearchBox = (): React.ReactElement => {
               <Select
                 label="จังหวัด"
                 style={styles.select}
-                placeholder="Default"
-                selectedIndex={selectedIndex}
-                onSelect={(index) => setSelectedIndex(index as IndexPath)}
+                placeholder="ทั้งหมด"
+                value={provinceSelectedDisplayValue.title}
+                selectedIndex={provinceSelectedIndex}
+                onSelect={(index) =>
+                  setProvinceSelectedIndex(index as IndexPath)
+                }
               >
                 {provinces
                   ? provinces.map(({ key, title }, index) => (
@@ -85,15 +97,16 @@ export const SearchBox = (): React.ReactElement => {
               status="primary"
               style={[styles.searchButton, {}]}
               onPressOut={() => {
-                // TODO:
-                router.push("/todo");
-                // navigation.navigate("Search Screen", {
-                //   q: {
-                //     keyword: searchKeywordInputState.value,
-                //     province: provinces[selectedIndex.row],
-                //     date: date,
-                //   },
-                // });
+                router.push({
+                  pathname: "/search-work",
+                  params: {
+                    provinceId: provinceSelectedDisplayValue
+                      ? provinceSelectedDisplayValue.key
+                      : undefined,
+                    keyword: searchKeywordInputState.value || undefined,
+                    date: date ? moment(date).format("YYYY-MM-DD") : undefined,
+                  },
+                });
               }}
               accessoryLeft={SearchIcon}
             >

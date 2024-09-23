@@ -2,7 +2,7 @@ import { KeyboardAvoidingView } from "@/components/atoms/keyboard-avoiding-view.
 import AlertModalComponent from "@/components/molecules/alert-modal.component";
 import LoadingView from "@/components/organisms/loading.view";
 import useAuth from "@/hooks/auth";
-import { WorkBooking } from "@/models/work-booking.model";
+import useWork from "@/hooks/work";
 import { useNavigation } from "@react-navigation/native";
 import {
   Button,
@@ -10,7 +10,7 @@ import {
   StyleService,
   useStyleSheet,
 } from "@ui-kitten/components";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { ScrollView, View, ViewStyle } from "react-native";
 import { WorkApiService } from "../../services/api.service";
 import httpRequest, {
@@ -18,7 +18,6 @@ import httpRequest, {
 } from "../../services/http-request.service";
 import { ImageOverlay } from "./extra/image.overlay.component";
 import { WorkInfoValue } from "./extra/work-info-value.component";
-import useWork from "@/hooks/work";
 
 interface Props {
   workBookingId: number;
@@ -96,7 +95,7 @@ export default ({ workBookingId }: Props): React.ReactElement => {
   };
 
   const isWorker = () => {
-    return user?.id == workBooking?.work.author.id;
+    return user?.id == workBooking?.work.author?.id;
   };
 
   const isCustomer = () => {

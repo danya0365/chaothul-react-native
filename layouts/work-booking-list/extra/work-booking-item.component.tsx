@@ -1,13 +1,3 @@
-import React from "react";
-import { ImageStyle, StyleSheet, View, ViewStyle } from "react-native";
-import {
-  Avatar,
-  ListItem,
-  ListItemProps,
-  Text,
-  useTheme,
-} from "@ui-kitten/components";
-import { useNavigation } from "@react-navigation/native";
 import {
   CheckmarkCircleIcon,
   CheckmarkIcon,
@@ -15,7 +5,17 @@ import {
   PersonDeleteIcon,
 } from "@/components/atoms/icons";
 import { WorkBooking } from "@/models/work-booking.model";
+import { useNavigation } from "@react-navigation/native";
+import {
+  Avatar,
+  ListItem,
+  ListItemProps,
+  Text,
+  useTheme,
+} from "@ui-kitten/components";
 import { router } from "expo-router";
+import React from "react";
+import { ImageStyle, StyleSheet, View } from "react-native";
 
 export type NotificationItemProps = ListItemProps & {
   workBooking: WorkBooking;
@@ -61,12 +61,7 @@ export const WorkBookingItem = (
   );
 
   const onItemPress = () => {
-    // TODO:
-    router.push("/todo");
-    // navigation &&
-    //   navigation.navigate("Work Booking Detail Screen", {
-    //     workBooking: workBooking,
-    //   });
+    router.push(`/work-booking/${workBooking.id}`);
   };
 
   return (

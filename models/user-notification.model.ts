@@ -1,5 +1,6 @@
 import moment from "moment";
 import { Work } from "./work.model";
+import { Recruit } from "./recruit.model";
 
 const convertStringToEnumWithValue = <T>(
   enumType: T,
@@ -24,13 +25,14 @@ export enum UserNotificationType {
 }
 
 export class UserNotification {
+  public work: Work | null = null;
+  public recruit: Recruit | null = null;
   constructor(
     readonly id: number,
     readonly title: string,
     readonly type: UserNotificationType,
     readonly date: string | null,
-    readonly isRead: boolean,
-    readonly work?: Work
+    readonly isRead: boolean
   ) {}
 
   get formattedTitle(): string {
@@ -49,13 +51,26 @@ export class UserNotification {
       UserNotificationType,
       userNotification.notification_type
     ) as UserNotificationType;
-    return new UserNotification(
+
+    const obj = new UserNotification(
       userNotification.id,
       userNotification.title,
       userNotificationType,
       userNotification.created_at,
-      userNotification.is_read,
-      Work.createFromApi(userNotification.notificationable)
+      userNotification.is_read
     );
+
+    switch (userNotificationType) {
+      case UserNotificationType.WorkBooking:
+      case UserNotificationType.BookingConfirm:
+      case UserNotificationType.WorkLike:
+        obj.work = Work.createFromApi(userNotification.notificationable);
+        break;
+      case UserNotificationType.WorkReview:
+      case UserNotificationType.ReviewReply:
+      case UserNotificationType.ReviewLike:
+      case UserNotificationType.RecruitBooking:
+    }
+    return obj;
   }
 }

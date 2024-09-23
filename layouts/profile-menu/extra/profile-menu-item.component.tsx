@@ -7,7 +7,6 @@ import {
   LoginIcon,
   LogoutIcon,
   MessageSquareIcon,
-  MessageSquareOutlineIcon,
 } from "@/components/atoms/icons";
 import { useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/reducer/auth-reducer";
@@ -28,9 +27,7 @@ export const ProfileMenuItem = (): React.ReactElement => {
         title="เข้าสู่ระบบ"
         accessoryRight={ForwardIcon}
         onPress={() => {
-          // TODO:
           router.push("/auth/login");
-          //navigation.navigate("Login Screen");
         }}
       />
       <MenuItem
@@ -38,9 +35,7 @@ export const ProfileMenuItem = (): React.ReactElement => {
         title="ธีม"
         accessoryRight={ForwardIcon}
         onPress={() => {
-          // TODO:
           router.push("/theme");
-          //navigation.navigate("Theme Screen");
         }}
       />
       <MenuItem
@@ -56,9 +51,7 @@ export const ProfileMenuItem = (): React.ReactElement => {
         title="เกี่ยวกับเรา"
         accessoryRight={ForwardIcon}
         onPress={() => {
-          // TODO:
           router.push("/about-us");
-          //navigation.navigate("About Us Screen");
         }}
       />
     </Menu>
@@ -79,9 +72,7 @@ export const ProfileMenuItem = (): React.ReactElement => {
         title="รายการจองรับงานของคุณ"
         accessoryRight={ForwardIcon}
         onPress={() => {
-          // TODO:
-          router.push("/todo");
-          //navigation.navigate("Me Work Booking Screen");
+          router.push("/my-work-bookings");
         }}
       />
       <MenuItem
@@ -89,9 +80,7 @@ export const ProfileMenuItem = (): React.ReactElement => {
         title="รายการจองหางานของคุณ"
         accessoryRight={ForwardIcon}
         onPress={() => {
-          // TODO:
-          router.push("/todo");
-          //navigation.navigate("Me Recruit Booking Screen");
+          router.push("/my-recruit-bookings");
         }}
       />
       <MenuItem
@@ -99,9 +88,7 @@ export const ProfileMenuItem = (): React.ReactElement => {
         title="ธีม"
         accessoryRight={ForwardIcon}
         onPress={() => {
-          // TODO:
-          router.push("/todo");
-          //navigation.navigate("Theme Screen");
+          router.push("/theme");
         }}
       />
       <MenuItem
@@ -117,9 +104,7 @@ export const ProfileMenuItem = (): React.ReactElement => {
         title="เกี่ยวกับเรา"
         accessoryRight={ForwardIcon}
         onPress={() => {
-          // TODO:
-          router.push("/todo");
-          //navigation.navigate("About Us Screen");
+          router.push("/about-us");
         }}
       />
       <MenuItem

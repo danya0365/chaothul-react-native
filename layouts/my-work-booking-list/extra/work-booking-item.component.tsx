@@ -1,5 +1,11 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import {
+  CheckmarkCircleIcon,
+  CheckmarkIcon,
+  LoaderIcon,
+  PersonDeleteIcon,
+} from "@/components/atoms/icons";
+import { WorkBooking } from "@/models/work-booking.model";
+import { useNavigation } from "@react-navigation/native";
 import {
   Avatar,
   ListItem,
@@ -7,16 +13,9 @@ import {
   Text,
   useTheme,
 } from "@ui-kitten/components";
-import { DoneAllIcon } from "./icons";
-import { useNavigation } from "@react-navigation/native";
 import { router } from "expo-router";
-import { WorkBooking } from "@/models/work-booking.model";
-import {
-  CheckmarkCircleIcon,
-  CheckmarkIcon,
-  LoaderIcon,
-  PersonDeleteIcon,
-} from "@/components/atoms/icons";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
 export type NotificationItemProps = ListItemProps & {
   workBooking: WorkBooking;
@@ -59,12 +58,7 @@ export const WorkBookingItem = (
   );
 
   const onItemPress = () => {
-    // TODO:
-    router.push("/todo");
-    // navigation &&
-    //   navigation.navigate("Work Booking Detail Screen", {
-    //     workBooking: workBooking,
-    //   });
+    router.push(`/work-booking/${workBooking.id}`);
   };
 
   return (
