@@ -8,7 +8,7 @@ import messengerReducer from "./reducer/messenger-reducer";
 import notificationReducer from "./reducer/notification-reducer";
 import bannerReducer from "./reducer/banner-reducer";
 import authReducer from "./reducer/auth-reducer";
-import messengerMobilephoneReducer from "./reducer/messenger-mobilephone-reducer";
+import messengerMobilePhoneReducer from "./reducer/messenger-mobile-phone-reducer";
 import sessionReducer from "./reducer/session-reducer";
 import workReducer from "./reducer/work-reducer";
 
@@ -39,15 +39,15 @@ const rootReducer = combineReducers({
     },
     messengerReducer
   ),
-  messengerMobilephone: persistReducer<
-    ReturnType<typeof messengerMobilephoneReducer>
+  messengerMobilePhone: persistReducer<
+    ReturnType<typeof messengerMobilePhoneReducer>
   >(
     {
       key: "messenger-mobilephone",
       storage: mainStorage,
       stateReconciler: autoMergeLevel2,
     },
-    messengerMobilephoneReducer
+    messengerMobilePhoneReducer
   ),
   notification: persistReducer<ReturnType<typeof notificationReducer>>(
     {

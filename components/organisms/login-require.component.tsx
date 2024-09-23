@@ -13,10 +13,7 @@ import { router } from "expo-router";
 export default (): React.ReactElement => {
   const styles = useStyleSheet(themedStyle);
   const onDismissPress = () => {
-    const jumpToAction = TabActions.jumpTo("Profile Menu Screen");
-    // TODO:
-    router.push("/todo");
-    //navigation.dispatch(jumpToAction);
+    router.push("/(app)/(root)/(bottom-tab)/profile-menu");
   };
 
   return (

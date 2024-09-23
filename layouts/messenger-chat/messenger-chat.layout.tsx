@@ -80,10 +80,12 @@ export default (props: Props): React.ReactElement => {
       const response = await messengerApiService.getLatestConversations({
         id: channelId,
       });
+
       if (response.status) {
         let newConversations = response.data.map((val) =>
           MessengerConversation.createFromApi(val)
         );
+
         newConversations = newConversations.sort((a, b) => {
           if (a.id < b.id) {
             return -1;
@@ -95,12 +97,14 @@ export default (props: Props): React.ReactElement => {
         });
         setConversations(newConversations);
         const lastConversation = newConversations[newConversations.length - 1];
-        if (lastConversationSeen?.id != lastConversation.id) {
-          dispatch(setLastConversationSeen(lastConversation));
+        if (lastConversation) {
+          if (lastConversationSeen?.id != lastConversation.id) {
+            dispatch(setLastConversationSeen(lastConversation));
 
-          setTimeout(() => {
-            flatListRef.current?.scrollToEnd({ animated: false });
-          }, 100);
+            setTimeout(() => {
+              flatListRef.current?.scrollToEnd({ animated: false });
+            }, 100);
+          }
         }
 
         if (isNewMessenger) {
@@ -187,7 +191,7 @@ export default (props: Props): React.ReactElement => {
       const response = await messengerApiService.submitNewConversation({
         id: channelId,
         content: sendMessage,
-        local_code_id: localCodeId,
+        localCodeId: localCodeId,
         type,
       });
       if (response.status) {

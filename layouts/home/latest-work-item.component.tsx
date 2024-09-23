@@ -17,13 +17,7 @@ export const LatestWorkItem = ({
 }: Props): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
   const onItemPress = (): void => {
-    // TODO:
-    router.push("/todo");
-    // navigation &&
-    //   navigation.navigate("Work Detail Screen", {
-    //     work: item,
-    //   });
-    console.log("press item index = " + item);
+    router.push(`/work/${item.id}`);
   };
 
   const headerCard = (): React.ReactElement => {

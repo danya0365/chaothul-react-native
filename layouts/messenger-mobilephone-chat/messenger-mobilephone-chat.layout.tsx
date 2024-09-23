@@ -16,8 +16,8 @@ import {
   setIsNewMessenger,
   setLastConversationSeen,
   setLocalCodeId,
-  setTelephone,
-} from "@/store/reducer/messenger-mobilephone-reducer";
+  setMobilePhone,
+} from "@/store/reducer/messenger-mobile-phone-reducer";
 import { useKeyboard } from "@react-native-community/hooks";
 import {
   Button,
@@ -54,9 +54,8 @@ export default (props: Props): React.ReactElement => {
     return keyboardHeight - 44;
   }, [keyboardHeight]);
 
-  const { telephone, channelId, localCodeId, isNewMessenger } = useAppSelector(
-    (state) => state.messengerMobilephone
-  );
+  const { mobilePhone, channelId, localCodeId, isNewMessenger } =
+    useAppSelector((state) => state.messengerMobilePhone);
   const [attachImages, setAttachImages] = React.useState<ImagePickerAsset[]>(
     []
   );
@@ -80,13 +79,13 @@ export default (props: Props): React.ReactElement => {
   }): React.ReactElement => <MessageItemView message={item} />;
 
   const getConversations = async () => {
-    if (!channelId || !telephone) return;
+    if (!channelId || !mobilePhone) return;
     try {
       setIsLoading(true);
       const response =
-        await messengerApiService.getLatestMobilephoneConversations({
+        await messengerApiService.getLatestMobilePhoneConversations({
           id: channelId,
-          telephone,
+          mobilePhone,
         });
       if (response.status) {
         let newConversations = response.data.map((val) =>
@@ -116,7 +115,7 @@ export default (props: Props): React.ReactElement => {
       //console.log("error", error);
       const response = error.response as Json;
       if (response.status === 404) {
-        dispatch(setTelephone(null));
+        dispatch(setMobilePhone(null));
         dispatch(setChannelId(null));
       }
     } finally {
@@ -188,7 +187,7 @@ export default (props: Props): React.ReactElement => {
   const submitConversation = async () => {
     let type: MessengerConversationType = "text";
     let sendMessage = message;
-    if (!channelId || !telephone || !localCodeId) return;
+    if (!channelId || !mobilePhone || !localCodeId) return;
 
     if (attachImages.length > 0) {
       setIsSending(true);
@@ -203,11 +202,11 @@ export default (props: Props): React.ReactElement => {
     try {
       setIsLoading(true);
       const response =
-        await messengerApiService.submitNewMobilephoneConversation({
+        await messengerApiService.submitNewMobilePhoneConversation({
           id: channelId,
-          telephone,
+          mobilePhone: mobilePhone,
           content: sendMessage,
-          local_code_id: localCodeId,
+          localCodeId: localCodeId,
           type,
         });
       if (response.status) {
@@ -249,7 +248,7 @@ export default (props: Props): React.ReactElement => {
 
   useEffect(() => {
     getConversations();
-  }, [channelId, telephone, localCodeId]);
+  }, [channelId, mobilePhone, localCodeId]);
 
   useEffect(() => {
     if (!localCodeId) {

@@ -168,15 +168,15 @@ export class MessengerApiService extends ApiService {
     return response.data;
   }
 
-  public async getLatestMobilephoneConversations({
+  public async getLatestMobilePhoneConversations({
     id,
-    telephone,
+    mobilePhone,
   }: {
     id: number;
-    telephone: string;
+    mobilePhone: string;
   }): Promise<ApiDataListResponse> {
     const response = await this.request.get(
-      `/messenger/telephone-channel/${id}/${telephone}/conversations`
+      `/messenger/mobile-phone-channel/${id}/${mobilePhone}/conversations`
     );
     return response.data;
   }
@@ -192,15 +192,15 @@ export class MessengerApiService extends ApiService {
     return response.data;
   }
 
-  public async getLastMobilephoneConversationSeen({
+  public async getLastMobilePhoneConversationSeen({
     channelId,
-    telephone,
+    mobilePhone,
   }: {
     channelId: number;
-    telephone: string;
+    mobilePhone: string;
   }): Promise<ApiDataListResponse> {
     const response = await this.request.get(
-      `/messenger/telephone-channel/${channelId}/${telephone}/conversations/last`
+      `/messenger/mobile-phone-channel/${channelId}/${mobilePhone}/conversations/last`
     );
     return response.data;
   }
@@ -217,16 +217,16 @@ export class MessengerApiService extends ApiService {
   public async submitNewConversation({
     id,
     content,
-    local_code_id,
+    localCodeId,
     type,
   }: {
     id: number;
     content: string;
-    local_code_id: string;
+    localCodeId: string;
     type: MessengerConversationType;
   }): Promise<ApiDataObjectResponse> {
     const formData = new FormData();
-    formData.append("local_code_id", local_code_id);
+    formData.append("local_code_id", localCodeId);
     formData.append("content", content);
     formData.append("type", type);
     const response = await this.request.post(
@@ -241,25 +241,25 @@ export class MessengerApiService extends ApiService {
     return response.data;
   }
 
-  public async submitNewMobilephoneConversation({
+  public async submitNewMobilePhoneConversation({
     id,
-    telephone,
+    mobilePhone,
     content,
-    local_code_id,
+    localCodeId,
     type,
   }: {
     id: number;
-    telephone: string;
+    mobilePhone: string;
     content: string;
-    local_code_id: string;
+    localCodeId: string;
     type: MessengerConversationType;
   }): Promise<ApiDataObjectResponse> {
     const formData = new FormData();
-    formData.append("local_code_id", local_code_id);
+    formData.append("local_code_id", localCodeId);
     formData.append("content", content);
     formData.append("type", type);
     const response = await this.request.post(
-      `/messenger/telephone-channel/${id}/${telephone}/conversations`,
+      `/messenger/mobile-phone-channel/${id}/${mobilePhone}/conversations`,
       formData,
       {
         headers: {
@@ -270,13 +270,13 @@ export class MessengerApiService extends ApiService {
     return response.data;
   }
 
-  public async doCreateNewTelephoneChannel(params: {
-    telephone: string;
+  public async doCreateNewMobilePhoneChannel(params: {
+    mobilePhone: string;
   }): Promise<ApiDataObjectResponse> {
     const formData = new FormData();
-    formData.append("telephone", params.telephone);
+    formData.append("mobile_phone", params.mobilePhone);
     const response = await this.request.post(
-      `/messenger/telephone-channel/new`,
+      `/messenger/mobile-phone-channel/new`,
       formData,
       {
         headers: {

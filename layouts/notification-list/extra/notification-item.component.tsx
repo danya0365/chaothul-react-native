@@ -79,12 +79,7 @@ export const NotificationItem = (
 
   const onItemPress = () => {
     if (userNotification?.work?.id) {
-      // TODO:
-      router.push("/todo");
-      // navigation &&
-      //   navigation.navigate("Work Detail Screen", {
-      //     work: userNotification.work,
-      //   });
+      router.push(`/work/${userNotification.work.id}`);
     }
   };
 

@@ -17,13 +17,7 @@ export const FavouriteWorkItem = (
   const navigation = useNavigation();
 
   const onItemPress = (): void => {
-    // TODO:
-    router.push("/todo");
-
-    // navigation &&
-    //   navigation.navigate("Work Detail Screen", {
-    //     work: work,
-    //   });
+    router.push(`/work/${work.id}`);
   };
 
   return (

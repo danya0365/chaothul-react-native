@@ -8,6 +8,7 @@ export class UserProfile {
   public roles: UserRole[] = [];
   constructor(
     readonly id: string,
+    readonly name: string,
     readonly firstName: string,
     readonly lastName: string,
     readonly email: string,
@@ -33,6 +34,7 @@ export class UserProfile {
   static createFromApi(json: Json): UserProfile {
     const obj = new UserProfile(
       json.id,
+      json.name ?? "",
       json.first_name,
       json.last_name,
       json.email,
@@ -51,6 +53,7 @@ export class UserProfile {
   static createFromObject(value: UserProfile): UserProfile {
     const obj = new UserProfile(
       value.id,
+      value.name ?? "",
       value.firstName,
       value.lastName,
       value.email,
@@ -73,8 +76,6 @@ export class UserProfile {
     if (permission) {
       return permission.data;
     }
-
-    console.log("this.roles", this.roles);
 
     for (const role of this.roles) {
       const permission = role.permissions.find(

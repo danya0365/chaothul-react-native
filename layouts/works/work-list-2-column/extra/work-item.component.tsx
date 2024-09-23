@@ -21,9 +21,7 @@ const WorkItem = (info: ListRenderItemInfo<Work>): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
 
   const onItemPress = (index: number, item: Work): void => {
-    // TODO:
-    router.push("/todo");
-    //navigation && navigation.navigate("Work Detail Screen", { work: item });
+    router.push(`/work/${item.id}`);
   };
 
   const renderItemHeader = (

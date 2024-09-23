@@ -18,12 +18,7 @@ export default (): React.ReactElement => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const onItemPress = (recruit: Recruit): void => {
-    // TODO:
-    router.push("/todo");
-    // navigation &&
-    //   navigation.navigate("Recruit Detail Screen", {
-    //     recruit: recruit,
-    //   });
+    router.push(`/recruit/${recruit.id}`);
   };
 
   const doRequestYourWorks = async (callback: () => void) => {

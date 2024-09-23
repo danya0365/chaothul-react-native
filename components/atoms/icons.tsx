@@ -557,6 +557,10 @@ export const ForwardIcon = (props: IconProps): IconElement => (
   <IconWithTheme {...props} name="arrow-ios-forward" />
 );
 
+export const MessageSquareIcon = (props: IconProps): IconElement => (
+  <IconWithTheme {...props} name="message-square-outline" />
+);
+
 export const AlertTriangleIcon = (props: IconProps): IconElement => (
   <IconWithTheme {...props} name="alert-triangle" />
 );

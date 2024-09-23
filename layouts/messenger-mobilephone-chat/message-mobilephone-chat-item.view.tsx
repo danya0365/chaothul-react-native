@@ -21,9 +21,9 @@ export const MessageItem = ({
   messengerApiService = new MessengerApiService(),
 }: Props): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
-  const { telephone } = useAppSelector((state) => state.messengerMobilephone);
+  const { mobilePhone } = useAppSelector((state) => state.messengerMobilePhone);
   const isYour = useMemo(() => {
-    return message.author.name === telephone;
+    return message.author.name === mobilePhone;
   }, [message]);
 
   const openLink = useCallback(

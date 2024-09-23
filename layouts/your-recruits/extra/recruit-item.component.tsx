@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { Avatar, ListItem, ListItemProps, Text } from "@ui-kitten/components";
-import { Recruit } from "../../../model/recruit.model";
+import { Recruit } from "@/models/recruit.model";
 
 export type WorkItemItemProps = ListItemProps & {
   recruit: Recruit;
@@ -10,7 +10,7 @@ export type WorkItemItemProps = ListItemProps & {
 export const RecruitItem = (props: WorkItemItemProps): React.ReactElement => {
   const { recruit, onPress, ...listItemProps } = props;
 
-  const renderRecruitDate = (style: ViewStyle): React.ReactElement => (
+  const renderRecruitDate = (style: any): React.ReactElement => (
     <View style={styles.dateContainer}>
       <Text style={styles.dateText} appearance="hint" category="c1">
         {recruit.formattedDate}
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: 40,
     height: 40,
-    tintColor: null,
+    tintColor: "transparent",
     marginRight: 10,
   },
   dateContainer: {

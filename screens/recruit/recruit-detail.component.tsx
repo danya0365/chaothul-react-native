@@ -13,7 +13,7 @@ import { useLocalSearchParams, useNavigation } from "expo-router";
 import React from "react";
 import RecruitDetails from "../../layouts/recruit-details";
 
-export const RecruitDetailsScreen = (): React.ReactElement => {
+export const RecruitDetailScreen = (): React.ReactElement => {
   const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
   const { user } = useAuth();

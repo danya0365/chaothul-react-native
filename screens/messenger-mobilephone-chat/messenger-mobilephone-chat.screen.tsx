@@ -1,13 +1,13 @@
 import FocusAwareStatusBarAuto from "@/components/atoms/focus-aware-status-bar-auto";
 import { ArrowIosBackIcon } from "@/components/atoms/icons";
 import { TopNavigationView } from "@/components/molecules/top-navigation.view";
-import MessengerMobilephoneChatLoginLayout from "@/layouts/messenger-mobilephone-chat/messenger-mobilephone-chat-login.layout";
-import MessengerMobilephoneChatLayout from "@/layouts/messenger-mobilephone-chat/messenger-mobilephone-chat.layout";
+import MessengerMobilePhoneChatLoginLayout from "@/layouts/messenger-mobilephone-chat/messenger-mobilephone-chat-login.layout";
+import MessengerMobilePhoneChatLayout from "@/layouts/messenger-mobilephone-chat/messenger-mobilephone-chat.layout";
 import { UseAppDispatch, useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   setChannelId,
-  setTelephone,
-} from "@/store/reducer/messenger-mobilephone-reducer";
+  setMobilePhone,
+} from "@/store/reducer/messenger-mobile-phone-reducer";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
   Divider,
@@ -30,7 +30,7 @@ export default (props: Props): React.ReactElement => {
   const { dispatch = useAppDispatch() } = props;
   const styles = useStyleSheet(themedStyles);
   const theme = useTheme();
-  const { telephone } = useAppSelector((state) => state.messengerMobilephone);
+  const { mobilePhone } = useAppSelector((state) => state.messengerMobilePhone);
   const insetsConfig = useSafeAreaInsets();
   const backgroundColor: string = theme[`navigation-bar-background`];
   const iconColor = theme["text-basic-color"];
@@ -55,13 +55,13 @@ export default (props: Props): React.ReactElement => {
   };
 
   const renderRightAction = (): React.ReactElement => {
-    if (!telephone) {
+    if (!mobilePhone) {
       return <></>;
     }
     return (
       <Pressable
         onPress={() => {
-          dispatch(setTelephone(null));
+          dispatch(setMobilePhone(null));
           dispatch(setChannelId(null));
         }}
       >
@@ -93,10 +93,10 @@ export default (props: Props): React.ReactElement => {
         accessoryLeft={renderBackAction}
       />
       <Divider />
-      {telephone ? (
-        <MessengerMobilephoneChatLayout />
+      {mobilePhone ? (
+        <MessengerMobilePhoneChatLayout />
       ) : (
-        <MessengerMobilephoneChatLoginLayout />
+        <MessengerMobilePhoneChatLoginLayout />
       )}
     </Layout>
   );

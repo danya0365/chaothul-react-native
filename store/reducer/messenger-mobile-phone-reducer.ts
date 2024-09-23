@@ -2,7 +2,7 @@ import { MessengerConversation } from "@/models/messenger-conversation";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface State {
-  telephone: string | null;
+  mobilePhone: string | null;
   channelId: number | null;
   localCodeId: string | null;
   lastConversationSeen: MessengerConversation | null;
@@ -10,7 +10,7 @@ interface State {
 }
 
 const initialState: State = {
-  telephone: null,
+  mobilePhone: null,
   channelId: null,
   localCodeId: null,
   lastConversationSeen: null,
@@ -18,11 +18,11 @@ const initialState: State = {
 };
 
 const appSlice = createSlice({
-  name: "messenger-mobilephone",
+  name: "messenger-mobile-phone",
   initialState,
   reducers: {
-    setTelephone(state, action: PayloadAction<string | null>) {
-      state.telephone = action.payload;
+    setMobilePhone(state, action: PayloadAction<string | null>) {
+      state.mobilePhone = action.payload;
     },
     setIsNewMessenger(state, action: PayloadAction<boolean>) {
       state.isNewMessenger = action.payload;
@@ -43,7 +43,7 @@ const appSlice = createSlice({
 });
 
 export const {
-  setTelephone,
+  setMobilePhone,
   setChannelId,
   setLocalCodeId,
   setLastConversationSeen,

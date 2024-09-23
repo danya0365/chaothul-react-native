@@ -13,7 +13,7 @@ import { ArrowIosBackIcon, EditIcon } from "@/components/atoms/icons";
 import { Work } from "@/models/work.model";
 import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
 
-export const WorkDetailsScreen = (): React.ReactElement => {
+export const WorkDetailScreen = (): React.ReactElement => {
   const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
   const { user } = useAuth();
@@ -21,8 +21,7 @@ export const WorkDetailsScreen = (): React.ReactElement => {
 
   const [isCanManageWork, setIsCanManageWork] = React.useState(false);
 
-  const renderEditAction = (): React.ReactElement => {
-    if (!isCanManageWork) return <></>;
+  const renderBackAction = (): React.ReactElement => {
     return (
       <TopNavigationAction
         icon={ArrowIosBackIcon}
@@ -31,14 +30,17 @@ export const WorkDetailsScreen = (): React.ReactElement => {
     );
   };
 
-  const renderBackAction = (): React.ReactElement => (
-    <TopNavigationAction
-      icon={EditIcon}
-      onPress={() => {
-        console.log("แก้ไขการรับงาน");
-      }}
-    />
-  );
+  const renderEditAction = (): React.ReactElement => {
+    if (!isCanManageWork) return <></>;
+    return (
+      <TopNavigationAction
+        icon={EditIcon}
+        onPress={() => {
+          console.log("แก้ไขการรับงาน");
+        }}
+      />
+    );
+  };
 
   const onWorkInfoReady = (workInfo: Work) => {
     if (workInfo?.author?.id == user?.id) {

@@ -16,7 +16,9 @@ export default function AppLayout() {
       <Stack.Screen name="theme" options={{ headerShown: false }} />
       <Stack.Screen name="term" options={{ headerShown: false }} />
       <Stack.Screen name="about-us" options={{ headerShown: false }} />
-      <Stack.Screen name="payment" options={{ headerShown: false }} />=
+      <Stack.Screen name="payment" options={{ headerShown: false }} />
+      <Stack.Screen name="work/[id]" options={{ headerShown: false }} />
+      <Stack.Screen name="recruit/[id]" options={{ headerShown: false }} />
       <Stack.Screen
         name="landing"
         options={{

@@ -9,14 +9,14 @@ import {
   useStyleSheet,
 } from "@ui-kitten/components";
 import { TabActions } from "@react-navigation/native";
+import { router } from "expo-router";
 
 export default ({ navigation }: { navigation: any }): React.ReactElement => {
   const styles = useStyleSheet(themedStyle);
   const [visible, setVisible] = React.useState(true);
   const onDismissPress = () => {
     setVisible(false);
-    const jumpToAction = TabActions.jumpTo("Profile Menu Screen");
-    navigation.dispatch(jumpToAction);
+    router.push("/(app)/(root)/(bottom-tab)/profile-menu");
   };
 
   React.useEffect(() => {

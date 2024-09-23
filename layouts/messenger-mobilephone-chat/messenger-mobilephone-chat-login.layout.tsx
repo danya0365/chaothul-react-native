@@ -6,8 +6,8 @@ import { MessengerApiService } from "@/services/api.service";
 import { UseAppDispatch, useAppDispatch } from "@/store/hooks";
 import {
   setChannelId,
-  setTelephone,
-} from "@/store/reducer/messenger-mobilephone-reducer";
+  setMobilePhone,
+} from "@/store/reducer/messenger-mobile-phone-reducer";
 import {
   Button,
   Input,
@@ -31,21 +31,21 @@ export default (props: Props): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
 
   const [loading, setLoading] = useState(false);
-  const [telephoneInput, setTelephoneInput] = React.useState<string>("");
+  const [mobilephoneInput, setMobilePhoneInput] = React.useState<string>("");
 
   const onSubmitButtonPress = async () => {
-    if (!telephoneInput) return;
+    if (!mobilephoneInput) return;
     setLoading(true);
     try {
-      const response = await messengerApiService.doCreateNewTelephoneChannel({
-        telephone: telephoneInput,
+      const response = await messengerApiService.doCreateNewMobilePhoneChannel({
+        mobilePhone: mobilephoneInput,
       });
 
       if (response.status) {
         const data = response.data as Json;
         const channelId = data.id;
 
-        dispatch(setTelephone(telephoneInput));
+        dispatch(setMobilePhone(mobilephoneInput));
         dispatch(setChannelId(channelId));
       }
     } catch (error) {
@@ -81,8 +81,8 @@ export default (props: Props): React.ReactElement => {
             <Input
               placeholder="หมายเลขโทรศัพท์มือถือ"
               accessoryRight={PersonIcon}
-              value={telephoneInput}
-              onChangeText={setTelephoneInput}
+              value={mobilephoneInput}
+              onChangeText={setMobilePhoneInput}
               autoCorrect={false}
               autoCapitalize="none"
               style={{

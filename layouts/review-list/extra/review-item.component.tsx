@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { Avatar, ListItem, ListItemProps, Text } from "@ui-kitten/components";
 import { DoneAllIcon } from "./icons";
-import { Review } from "../../../model/review.model";
+import { Review } from "@/models/review.model";
 
 export type NotificationItemProps = ListItemProps & {
   review: Review;
@@ -13,7 +13,7 @@ export const ReviewItem = (
 ): React.ReactElement => {
   const { review, onPress, ...listItemProps } = props;
 
-  const renderMessageDate = (style: ViewStyle): React.ReactElement => (
+  const renderMessageDate = (style: any): React.ReactElement => (
     <View style={styles.dateContainer}>
       <Text style={styles.dateText} appearance="hint" category="c1">
         {review.formattedDate}
@@ -22,7 +22,7 @@ export const ReviewItem = (
   );
 
   const renderProfileAvatar = (): React.ReactElement => (
-    <Avatar style={styles.avatar} source={review.author.photo} />
+    <Avatar style={styles.avatar as any} source={review.author.photoUrl} />
   );
 
   return (
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: 40,
     height: 40,
-    tintColor: null,
+    tintColor: "transparent",
     marginRight: 10,
   },
   dateContainer: {

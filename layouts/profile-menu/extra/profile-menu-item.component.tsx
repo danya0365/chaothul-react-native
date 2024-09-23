@@ -6,6 +6,8 @@ import {
   InfoIcon,
   LoginIcon,
   LogoutIcon,
+  MessageSquareIcon,
+  MessageSquareOutlineIcon,
 } from "@/components/atoms/icons";
 import { useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/reducer/auth-reducer";
@@ -39,6 +41,14 @@ export const ProfileMenuItem = (): React.ReactElement => {
           // TODO:
           router.push("/theme");
           //navigation.navigate("Theme Screen");
+        }}
+      />
+      <MenuItem
+        accessoryLeft={MessageSquareIcon}
+        title="แชทกับเจ้าหน้าที่"
+        accessoryRight={ForwardIcon}
+        onPress={() => {
+          router.push("/messenger-mobilephone-chat");
         }}
       />
       <MenuItem
@@ -92,6 +102,14 @@ export const ProfileMenuItem = (): React.ReactElement => {
           // TODO:
           router.push("/todo");
           //navigation.navigate("Theme Screen");
+        }}
+      />
+      <MenuItem
+        accessoryLeft={MessageSquareIcon}
+        title="แชทกับเจ้าหน้าที่"
+        accessoryRight={ForwardIcon}
+        onPress={() => {
+          router.push("/messenger-chat");
         }}
       />
       <MenuItem

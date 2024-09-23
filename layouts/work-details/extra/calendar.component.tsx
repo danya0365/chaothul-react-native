@@ -15,7 +15,7 @@ import {
 } from "@ui-kitten/components/ui/calendar/type";
 import moment from "moment";
 import { StyleProp, View, ViewStyle } from "react-native";
-import { WorkBooking } from "../../../model/work-booking.model";
+import { WorkBooking } from "@/models/work-booking.model";
 import { MomentDateService } from "@ui-kitten/moment";
 
 const dateService = new MomentDateService();

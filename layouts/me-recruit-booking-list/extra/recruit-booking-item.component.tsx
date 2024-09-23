@@ -9,7 +9,8 @@ import {
 } from "@ui-kitten/components";
 import { DoneAllIcon } from "./icons";
 import { useNavigation } from "@react-navigation/native";
-import { RecruitBooking } from "../../../model/recruit-booking.model";
+import { RecruitBooking } from "@/models/recruit-booking.model";
+import { router } from "expo-router";
 
 export type NotificationItemProps = ListItemProps & {
   recruitBooking: RecruitBooking;
@@ -33,15 +34,19 @@ export const WorkBookingItem = (
 
   const renderProfileAvatar = (): React.ReactElement => (
     <Avatar
-      style={styles.avatar}
+      style={styles.avatar as any}
       source={recruitBooking.recruit?.primaryImage}
     />
   );
 
   const onItemPress = () => {
     console.log("recruitBooking", recruitBooking);
-
-    console.log("onItemPress");
+    // TODO:
+    router.push("/todo");
+    // navigation &&
+    //   navigation.navigate("Recruit Booking Detail Screen", {
+    //     workBooking: workBooking,
+    //   });
   };
 
   return (
@@ -63,7 +68,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: 40,
     height: 40,
-    tintColor: null,
+    tintColor: "transparent",
     marginRight: 10,
   },
   dateContainer: {

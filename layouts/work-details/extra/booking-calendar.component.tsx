@@ -1,12 +1,12 @@
 import React, { memo, useMemo } from "react";
 import moment from "moment";
-import { WorkBooking } from "../../../model/work-booking.model";
 import httpRequest, {
   ApiErrorResponse,
 } from "../../../services/http-request.service";
 import { WorkApiService } from "../../../services/api.service";
-import LoadingComponent from "../../../components/loading.component";
 import CalendarComponent from "./calendar.component";
+import { WorkBooking } from "@/models/work-booking.model";
+import LoadingView from "@/components/organisms/loading.view";
 
 const BookingCalendarComponent = ({
   workId,
@@ -40,13 +40,13 @@ const BookingCalendarComponent = ({
         dateEnd
       );
       if (response.status) {
-        let responseDataList = response.data.list.map((data) => {
+        let responseDataList = response.data.map((data) => {
           return WorkBooking.createFromApi(data) as WorkBooking;
         });
         responseDataList = myUnionBy(
           [responseDataList, confirmWorkBookings],
           "id"
-        ) as WorkBooking[];
+        );
         setConfirmWorkBookings(responseDataList);
         if (!initialDate) {
           setInitialDate(moment());
@@ -65,12 +65,13 @@ const BookingCalendarComponent = ({
     }
   };
 
-  const myUnionBy = (arrays: any[], iteratee: string): any => {
-    const map = {};
+  const myUnionBy = (arrays: WorkBooking[][], iteratee: string): any => {
+    const map: Record<string, WorkBooking> = {};
 
-    arrays.forEach((array: any[]) => {
-      array.forEach((object: any) => {
-        map[object[iteratee]] = object;
+    arrays.forEach((array: WorkBooking[]) => {
+      array.forEach((object: WorkBooking) => {
+        const key = `${object[iteratee as keyof WorkBooking]}`;
+        map[key] = object;
       });
     });
 
@@ -90,7 +91,7 @@ const BookingCalendarComponent = ({
           getConfirmWorkBookings={getConfirmWorkBookings}
         />
       )}
-      {isLoading && <LoadingComponent onDismissPress={null} />}
+      {isLoading && <LoadingView />}
     </>
   );
 };
