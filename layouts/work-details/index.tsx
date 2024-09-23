@@ -1,7 +1,7 @@
 import { MessageCircleIcon } from "@/components/atoms/icons";
 import LoadingView from "@/components/organisms/loading.view";
+import useAuth from "@/hooks/auth";
 import { Work } from "@/models/work.model";
-import { useAppSelector } from "@/store/hooks";
 import {
   Avatar,
   Button,
@@ -41,7 +41,7 @@ export default ({ workId, onWorkInfoReady }: Props): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
   const workApiService = new WorkApiService(httpRequest);
   const meApiService = new MeApiService(httpRequest);
-  const { user } = useAppSelector((state) => state.auth);
+  const { user } = useAuth();
   const [isCanManageWork, setIsCanManageWork] = React.useState(false);
 
   const [refreshing, setRefreshing] = React.useState(false);

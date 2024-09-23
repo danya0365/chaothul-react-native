@@ -52,6 +52,11 @@ export default function RootLayout() {
           name="my-work-bookings"
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="select-your-or-other-recruit"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="other-recruits" options={{ headerShown: false }} />
       </Stack>
     </>
   );

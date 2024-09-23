@@ -647,6 +647,20 @@ export class MeApiService extends ApiService {
     return response.data;
   }
 
+  public async getOtherRecruits(
+    exceptAuthorId: number,
+    page: number
+  ): Promise<ApiDataListResponse> {
+    const response = await httpRequest.get(`/recruits`, {
+      params: {
+        page: page,
+        limit: 15,
+        exceptAuthorId,
+      },
+    });
+    return response.data;
+  }
+
   public async getWorkBookingList(
     pageNumber: number
   ): Promise<ApiDataListResponse> {

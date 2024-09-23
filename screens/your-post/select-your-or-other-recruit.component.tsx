@@ -1,7 +1,7 @@
 import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
 import LoginRequireComponent from "@/components/organisms/login-require.component";
 import { MenuGridList } from "@/components/organisms/menu-grid-list.component";
-import { useAppSelector } from "@/store/hooks";
+import useAuth from "@/hooks/auth";
 import {
   Divider,
   StyleService,
@@ -10,24 +10,24 @@ import {
 } from "@ui-kitten/components";
 import { router } from "expo-router";
 import React from "react";
-import { workOrRecruitData } from "./data";
+import { youOrOtherRecruitData } from "./data";
 
-export const SelectPostScreen = (): React.ReactElement => {
+export const SelectYourOrOtherRecruitScreen = (): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
-  const { token } = useAppSelector((state) => state.auth);
+  const { user } = useAuth();
 
   const onItemPress = (index: number): void => {
-    router.push(workOrRecruitData[index].route);
+    router.push(youOrOtherRecruitData[index].route);
   };
 
   return (
     <SafeAreaLayoutView style={styles.safeArea} insets="top">
-      <TopNavigation title={`โพสท์รับงานหรือหางาน`} />
+      <TopNavigation title={`โพสท์หางาน`} />
       <Divider />
-      {!token ? (
+      {!user ? (
         <LoginRequireComponent />
       ) : (
-        <MenuGridList data={workOrRecruitData} onItemPress={onItemPress} />
+        <MenuGridList data={youOrOtherRecruitData} onItemPress={onItemPress} />
       )}
     </SafeAreaLayoutView>
   );

@@ -7,7 +7,7 @@ export class UserProfile {
   public permissions: Permission[] = [];
   public roles: UserRole[] = [];
   constructor(
-    readonly id: string,
+    readonly id: number,
     readonly name: string,
     readonly firstName: string,
     readonly lastName: string,

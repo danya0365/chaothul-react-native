@@ -1,34 +1,32 @@
+import { ArrowIosBackIcon } from "@/components/atoms/icons";
 import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
 import LoginRequireComponent from "@/components/organisms/login-require.component";
-import { MenuGridList } from "@/components/organisms/menu-grid-list.component";
-import { useAppSelector } from "@/store/hooks";
+import useAuth from "@/hooks/auth";
+import OtherRecruits from "@/layouts/other-recruits";
 import {
   Divider,
   StyleService,
   TopNavigation,
+  TopNavigationAction,
   useStyleSheet,
 } from "@ui-kitten/components";
-import { router } from "expo-router";
+import { useNavigation } from "expo-router";
 import React from "react";
-import { workOrRecruitData } from "./data";
 
-export const SelectPostScreen = (): React.ReactElement => {
+export const OtherRecruitScreen = (): React.ReactElement => {
+  const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
-  const { token } = useAppSelector((state) => state.auth);
+  const { user } = useAuth();
 
-  const onItemPress = (index: number): void => {
-    router.push(workOrRecruitData[index].route);
-  };
+  const renderBackAction = (): React.ReactElement => (
+    <TopNavigationAction icon={ArrowIosBackIcon} onPress={navigation.goBack} />
+  );
 
   return (
     <SafeAreaLayoutView style={styles.safeArea} insets="top">
-      <TopNavigation title={`โพสท์รับงานหรือหางาน`} />
+      <TopNavigation title={`ประกาศหางาน`} accessoryLeft={renderBackAction} />
       <Divider />
-      {!token ? (
-        <LoginRequireComponent />
-      ) : (
-        <MenuGridList data={workOrRecruitData} onItemPress={onItemPress} />
-      )}
+      {!user ? <LoginRequireComponent /> : <OtherRecruits />}
     </SafeAreaLayoutView>
   );
 };
