@@ -1,19 +1,21 @@
-import React from "react";
+import { ArrowIosBackIcon } from "@/components/atoms/icons";
+import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
+import CreateRecruitBooking from "@/layouts/create-recruit-booking";
 import {
   Divider,
-  Text,
   StyleService,
   TopNavigation,
   TopNavigationAction,
   useStyleSheet,
 } from "@ui-kitten/components";
-import { useNavigation } from "expo-router";
-import { ArrowIosBackIcon } from "@/components/atoms/icons";
-import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import React from "react";
 
 export const CreateRecruitBookingScreen = (): React.ReactElement => {
   const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
+  const { id: recruitId } = useLocalSearchParams<{ id: string }>();
+
   const renderBackAction = (): React.ReactElement => (
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={navigation.goBack} />
   );
@@ -22,7 +24,7 @@ export const CreateRecruitBookingScreen = (): React.ReactElement => {
     <SafeAreaLayoutView style={styles.safeArea} insets="top">
       <TopNavigation title={`ทำการจอง`} accessoryLeft={renderBackAction} />
       <Divider />
-      <Text>ทำการจอง</Text>
+      <CreateRecruitBooking recruitId={Number(recruitId)} />
     </SafeAreaLayoutView>
   );
 };

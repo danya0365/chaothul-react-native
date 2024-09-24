@@ -1,3 +1,4 @@
+import { RecruitBookingFormData } from "@/form-data/recruit-booking.form-data";
 import { WorkBookingFormData } from "@/form-data/work-booking.form-data";
 import {
   MessengerConversation,
@@ -595,6 +596,78 @@ export class RecruitApiService extends ApiService {
         "content-type": "multipart/form-data",
       },
     });
+    return response.data;
+  }
+
+  public async doBookingRecruit(
+    workBookingFormData: RecruitBookingFormData
+  ): Promise<ApiResponse> {
+    const formData = new FormData();
+    formData.append("customer_message", workBookingFormData.customerMessage);
+    formData.append("mobile_phone", workBookingFormData.mobilePhone);
+    formData.append(
+      "booking_date",
+      moment(workBookingFormData.bookingDate).format("YYYY-MM-DD")
+    );
+
+    const response = await httpRequest.post(
+      `/recruits/${workBookingFormData.recruitId}/bookings`,
+      formData,
+      {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data;
+  }
+
+  public async doWorkerConfirmRecruitBooking(
+    recruitBookingId: number
+  ): Promise<ApiResponse> {
+    const formData = new FormData();
+    formData.append("recruit_booking_id", `${recruitBookingId}`);
+    const response = await httpRequest.post(
+      `/recruit-bookings/${recruitBookingId}/worker-confirm`,
+      formData,
+      {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data;
+  }
+
+  public async doCustomerConfirmRecruitBooking(
+    recruitBookingId: number
+  ): Promise<ApiResponse> {
+    const formData = new FormData();
+    formData.append("recruit_booking_id", `${recruitBookingId}`);
+    const response = await httpRequest.post(
+      `/recruit-bookings/${recruitBookingId}/customer-confirm`,
+      formData,
+      {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data;
+  }
+
+  public async getRecruitBookingList(
+    recruitId: number,
+    pageNumber: number
+  ): Promise<ApiDataListResponse> {
+    const response = await httpRequest.get<ApiDataListResponse>(
+      `/recruits/${recruitId}/bookings`,
+      {
+        params: {
+          page: pageNumber,
+        },
+      }
+    );
     return response.data;
   }
 }

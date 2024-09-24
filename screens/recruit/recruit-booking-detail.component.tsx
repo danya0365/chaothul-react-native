@@ -1,6 +1,6 @@
 import { ArrowIosBackIcon } from "@/components/atoms/icons";
 import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
-import RecruitBookingList from "@/layouts/recruit-booking-list";
+import RecruitBookingDetail from "@/layouts/recruit-booking-detail";
 import {
   Divider,
   StyleService,
@@ -11,10 +11,11 @@ import {
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React from "react";
 
-export const RecruitBookingListScreen = (): React.ReactElement => {
+export const RecruitBookingDetailScreen = (): React.ReactElement => {
   const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
-  const { id: recruitId } = useLocalSearchParams<{ id: string }>();
+  const { id: recruitBookingId } = useLocalSearchParams<{ id: string }>();
+
   const renderBackAction = (): React.ReactElement => (
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={navigation.goBack} />
   );
@@ -22,11 +23,11 @@ export const RecruitBookingListScreen = (): React.ReactElement => {
   return (
     <SafeAreaLayoutView style={styles.safeArea} insets="top">
       <TopNavigation
-        title={`รายการจองทั้งหมด`}
+        title={`รายละเอียดการจอง`}
         accessoryLeft={renderBackAction}
       />
       <Divider />
-      <RecruitBookingList recruitId={Number(recruitId)} />
+      <RecruitBookingDetail recruitBookingId={Number(recruitBookingId)} />
     </SafeAreaLayoutView>
   );
 };

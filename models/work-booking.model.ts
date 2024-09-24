@@ -2,6 +2,7 @@ import moment from "moment";
 import { UserProfile } from "./user-profile";
 import { Work } from "./work.model";
 import { Status } from "./status.model";
+import { Json } from "./json";
 
 export class WorkBooking {
   constructor(
@@ -37,10 +38,7 @@ export class WorkBooking {
     return formatted;
   }
 
-  static createFromApi(workBooking: any): WorkBooking | null {
-    if (!workBooking) {
-      return null;
-    }
+  static createFromApi(workBooking: Json): WorkBooking {
     return new WorkBooking(
       workBooking.id,
       workBooking.customer_message,

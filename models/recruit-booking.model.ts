@@ -1,6 +1,8 @@
 import moment from "moment";
-import { UserProfile } from "./user-profile";
+import { Json } from "./json";
 import { Recruit } from "./recruit.model";
+import { Status } from "./status.model";
+import { UserProfile } from "./user-profile";
 
 export class RecruitBooking {
   constructor(
@@ -8,13 +10,21 @@ export class RecruitBooking {
     readonly customerMessage: string,
     readonly mobilePhone: string,
     readonly bookingDate: Date,
-    readonly bookingStatus: string,
-    readonly customerConfirmStatus: string,
-    readonly workerConfirmStatus: string,
+    readonly bookingStatus: Status,
+    readonly customerConfirmStatus: Status,
+    readonly workerConfirmStatus: Status,
     readonly createdAt: string,
     readonly recruit: Recruit,
     readonly author?: UserProfile
   ) {}
+
+  get formattedCustomerConfirmStatus(): string {
+    return this.customerConfirmStatus.title;
+  }
+
+  get formattedWorkerConfirmStatus(): string {
+    return this.workerConfirmStatus.title;
+  }
 
   get formattedBookingDate(): string {
     var date = new Date(this.bookingDate);
@@ -28,18 +38,15 @@ export class RecruitBooking {
     return formatted;
   }
 
-  static createFromApi(recruitBooking: any): RecruitBooking | null {
-    if (!recruitBooking) {
-      return null;
-    }
+  static createFromApi(recruitBooking: Json): RecruitBooking {
     return new RecruitBooking(
       recruitBooking.id,
       recruitBooking.customer_message,
       recruitBooking.mobile_phone,
       new Date(recruitBooking?.booking_date),
-      recruitBooking.booking_status,
-      recruitBooking.customer_confirm_status,
-      recruitBooking.worker_confirm_status,
+      new Status(recruitBooking.booking_status),
+      new Status(recruitBooking.customer_confirm_status),
+      new Status(recruitBooking.worker_confirm_status),
       recruitBooking.created_at,
       Recruit.createFromApi(recruitBooking.recruit),
       UserProfile.createFromApi(recruitBooking.author) ?? undefined

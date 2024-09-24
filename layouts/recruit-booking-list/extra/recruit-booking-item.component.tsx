@@ -15,7 +15,7 @@ import {
 } from "@ui-kitten/components";
 import { router } from "expo-router";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { ImageStyle, StyleSheet, View } from "react-native";
 
 export type NotificationItemProps = ListItemProps & {
   recruitBooking: RecruitBooking;
@@ -23,11 +23,11 @@ export type NotificationItemProps = ListItemProps & {
 
 const grayColor = "#C2C2C2";
 
-export const WorkBookingItem = (
+export const RecruitBookingItem = (
   props: NotificationItemProps
 ): React.ReactElement => {
   const theme = useTheme();
-  const navigation = useNavigation();
+  const navigation = useNavigation() as any;
   const { recruitBooking, ...listItemProps } = props;
 
   const renderMessageDate = (): React.ReactElement => (
@@ -55,8 +55,8 @@ export const WorkBookingItem = (
 
   const renderProfileAvatar = (): React.ReactElement => (
     <Avatar
-      style={styles.avatar as any}
-      source={recruitBooking.recruit?.primaryImage}
+      style={styles.avatar as ImageStyle}
+      source={recruitBooking.author?.photoUrl}
     />
   );
 
@@ -71,8 +71,8 @@ export const WorkBookingItem = (
       onPress={() => {
         onItemPress();
       }}
-      title={recruitBooking.recruit?.author?.fullName}
-      description={recruitBooking.recruit?.title}
+      title={recruitBooking.author?.fullName}
+      description={recruitBooking.customerMessage}
       accessoryLeft={renderProfileAvatar}
       accessoryRight={renderMessageDate}
     />
@@ -83,15 +83,15 @@ const styles = StyleSheet.create({
   avatar: {
     width: 40,
     height: 40,
-    tintColor: "transparent",
+    tintColor: undefined,
     marginRight: 10,
   },
   dateContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
   },
   dateText: {
+    marginStart: 4,
     textAlign: "right",
     minWidth: 64,
   },

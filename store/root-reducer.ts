@@ -1,14 +1,15 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistReducer } from "redux-persist";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import appReducer from "./reducer/app-reducer";
+import authReducer from "./reducer/auth-reducer";
+import bannerReducer from "./reducer/banner-reducer";
+import messengerMobilePhoneReducer from "./reducer/messenger-mobile-phone-reducer";
 import messengerReducer from "./reducer/messenger-reducer";
 import notificationReducer from "./reducer/notification-reducer";
-import bannerReducer from "./reducer/banner-reducer";
-import authReducer from "./reducer/auth-reducer";
-import messengerMobilePhoneReducer from "./reducer/messenger-mobile-phone-reducer";
+import recruitReducer from "./reducer/recruit-reducer";
 import sessionReducer from "./reducer/session-reducer";
 import workReducer from "./reducer/work-reducer";
 
@@ -72,6 +73,14 @@ const rootReducer = combineReducers({
       stateReconciler: autoMergeLevel2,
     },
     workReducer
+  ),
+  recruit: persistReducer<ReturnType<typeof recruitReducer>>(
+    {
+      key: "recruit",
+      storage: mainStorage,
+      stateReconciler: autoMergeLevel2,
+    },
+    recruitReducer
   ),
   session: sessionReducer,
 });

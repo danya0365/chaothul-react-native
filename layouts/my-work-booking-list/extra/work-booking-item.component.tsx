@@ -86,9 +86,9 @@ const styles = StyleSheet.create({
   dateContainer: {
     flexDirection: "row",
     alignItems: "center",
+    gap: 8,
   },
   dateText: {
-    marginStart: 4,
     textAlign: "right",
     minWidth: 64,
   },

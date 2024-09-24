@@ -1,3 +1,3 @@
-import { WorkBookingDetailsScreen } from "@/screens/work/work-booking-detail.component";
+import { WorkBookingDetailScreen } from "@/screens/work/work-booking-detail.component";
 
-export default WorkBookingDetailsScreen;
+export default WorkBookingDetailScreen;

@@ -1,3 +1,3 @@
-import { RecruitBookingListScreen } from "@/screens/recruit/recruit-booking-list.component";
+import { RecruitBookingDetailScreen } from "@/screens/recruit/recruit-booking-detail.component";
 
-export default RecruitBookingListScreen;
+export default RecruitBookingDetailScreen;

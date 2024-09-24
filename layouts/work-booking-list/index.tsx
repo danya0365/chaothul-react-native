@@ -1,13 +1,13 @@
-import React from "react";
-import { ListRenderItemInfo, RefreshControl } from "react-native";
-import { List, StyleService, useStyleSheet } from "@ui-kitten/components";
-import { WorkBookingItem } from "./extra/work-booking-item.component";
-import httpRequest from "../../services/http-request.service";
-import { WorkApiService } from "../../services/api.service";
-import { WorkBooking } from "@/models/work-booking.model";
-import { useNavigation } from "expo-router";
 import LoadingView from "@/components/organisms/loading.view";
 import useWork from "@/hooks/work";
+import { WorkBooking } from "@/models/work-booking.model";
+import { List, StyleService, useStyleSheet } from "@ui-kitten/components";
+import { useNavigation } from "expo-router";
+import React from "react";
+import { ListRenderItemInfo, RefreshControl } from "react-native";
+import { WorkApiService } from "../../services/api.service";
+import httpRequest from "../../services/http-request.service";
+import { WorkBookingItem } from "./extra/work-booking-item.component";
 
 export default ({ workId }: { workId: number }): React.ReactElement => {
   const navigation = useNavigation();
@@ -31,8 +31,8 @@ export default ({ workId }: { workId: number }): React.ReactElement => {
         workId,
         pageNumber
       );
-      const apiWorkBookings = response.data.map(
-        (workBookings) => WorkBooking.createFromApi(workBookings) as WorkBooking
+      const apiWorkBookings = response.data.map((workBookings) =>
+        WorkBooking.createFromApi(workBookings)
       );
       setWorkBookings(apiWorkBookings);
       callback();

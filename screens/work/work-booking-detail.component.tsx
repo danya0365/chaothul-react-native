@@ -1,4 +1,5 @@
-import React from "react";
+import { ArrowIosBackIcon } from "@/components/atoms/icons";
+import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
 import {
   Divider,
   StyleService,
@@ -6,12 +7,11 @@ import {
   TopNavigationAction,
   useStyleSheet,
 } from "@ui-kitten/components";
-import WorkBookingDetail from "../../layouts/work-booking-detail";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { ArrowIosBackIcon } from "@/components/atoms/icons";
-import { SafeAreaLayoutView } from "@/components/atoms/safe-area-layout.view";
+import React from "react";
+import WorkBookingDetail from "../../layouts/work-booking-detail";
 
-export const WorkBookingDetailsScreen = (): React.ReactElement => {
+export const WorkBookingDetailScreen = (): React.ReactElement => {
   const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
   const { id: workBookingId } = useLocalSearchParams<{ id: string }>();

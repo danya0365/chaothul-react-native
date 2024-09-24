@@ -39,6 +39,10 @@ export default function AppLayout() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="recruit-booking/[id]"
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="landing"
         options={{
           headerShown: false,

@@ -12,7 +12,7 @@ import {
 } from "@ui-kitten/components";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React from "react";
-import WorkBooking from "../../layouts/create-work-booking";
+import CreateWorkBooking from "../../layouts/create-work-booking";
 
 export const CreateWorkBookingScreen = (): React.ReactElement => {
   const navigation = useNavigation();
@@ -29,7 +29,7 @@ export const CreateWorkBookingScreen = (): React.ReactElement => {
     <SafeAreaLayoutView style={styles.safeArea} insets="top">
       <TopNavigation title={`ทำการจอง`} accessoryLeft={renderBackAction} />
       <Divider />
-      <WorkBooking workId={Number(workId)} />
+      <CreateWorkBooking workId={Number(workId)} />
     </SafeAreaLayoutView>
   );
 };

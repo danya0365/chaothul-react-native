@@ -1,19 +1,20 @@
+import LoadingView from "@/components/organisms/loading.view";
+import useRecruit from "@/hooks/recruit";
+import { RecruitBooking } from "@/models/recruit-booking.model";
+import { WorkBooking } from "@/models/work-booking.model";
+import { List, StyleService, useStyleSheet } from "@ui-kitten/components";
+import { useNavigation } from "expo-router";
 import React from "react";
 import { ListRenderItemInfo, RefreshControl } from "react-native";
-import { List, StyleService, useStyleSheet } from "@ui-kitten/components";
-import { WorkBookingItem } from "./extra/recruit-booking-item.component";
+import { RecruitApiService } from "../../services/api.service";
 import httpRequest from "../../services/http-request.service";
-import { MeApiService } from "../../services/api.service";
-import { RecruitBooking } from "@/models/recruit-booking.model";
-import LoadingView from "@/components/organisms/loading.view";
-import { useNavigation } from "expo-router";
-import useRecruit from "@/hooks/recruit";
+import { RecruitBookingItem } from "./extra/recruit-booking-item.component";
 
-export default (): React.ReactElement => {
+export default ({ recruitId }: { recruitId: number }): React.ReactElement => {
   const navigation = useNavigation();
   const styles = useStyleSheet(themedStyles);
   const { recruitBookings, setRecruitBookings } = useRecruit();
-  const meApiService = new MeApiService(httpRequest);
+  const recruitApiService = new RecruitApiService(httpRequest);
   const [refreshing, setRefreshing] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [pageNumber, setPageNumber] = React.useState(1);
@@ -21,18 +22,20 @@ export default (): React.ReactElement => {
   const renderItem = (
     info: ListRenderItemInfo<RecruitBooking>
   ): React.ReactElement => (
-    <WorkBookingItem style={styles.item} recruitBooking={info.item} />
+    <RecruitBookingItem style={styles.item} recruitBooking={info.item} />
   );
 
-  const doRequestRecruitBookingList = async (callback: any) => {
+  const doRequestWorkBookingList = async (callback: any) => {
     setIsLoading(true);
     try {
-      const response = await meApiService.getRecruitBookingList(pageNumber);
-      const apiData = response.data.map(
-        (workBookings) =>
-          RecruitBooking.createFromApi(workBookings) as RecruitBooking
+      const response = await recruitApiService.getRecruitBookingList(
+        recruitId,
+        pageNumber
       );
-      setRecruitBookings(apiData);
+      const apiRecruitBookings = response.data.map((recruitBookings) =>
+        RecruitBooking.createFromApi(recruitBookings)
+      );
+      setRecruitBookings(apiRecruitBookings);
       callback();
       setIsLoading(false);
     } catch (error: any) {
@@ -49,20 +52,20 @@ export default (): React.ReactElement => {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    doRequestRecruitBookingList(() => {
+    doRequestWorkBookingList(() => {
       setRefreshing(false);
     });
   }, []);
 
   React.useEffect(() => {
-    doRequestRecruitBookingList(() => {
+    doRequestWorkBookingList(() => {
       setRefreshing(false);
     });
   }, []);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      doRequestRecruitBookingList(() => {
+      doRequestWorkBookingList(() => {
         setRefreshing(false);
       });
     });
