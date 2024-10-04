@@ -8,17 +8,49 @@ import {
   LogoutIcon,
   MessageSquareIcon,
 } from "@/components/atoms/icons";
+import { Json } from "@/models/json";
+import { MessengerApiService } from "@/services/api.service";
 import { useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/reducer/auth-reducer";
+import { setChannelId } from "@/store/reducer/messenger-mobile-phone-reducer";
 import { Layout, Menu, MenuItem } from "@ui-kitten/components";
 import { router } from "expo-router";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 
-export const ProfileMenuItem = (): React.ReactElement => {
+export const ProfileMenuItem = ({
+  messengerApiService = new MessengerApiService(),
+}: {
+  messengerApiService?: MessengerApiService;
+}): React.ReactElement => {
   const dispatch = useDispatch();
   const { token } = useAppSelector((state) => state.auth);
+  const { lastConversationSeen, channelId } = useAppSelector(
+    (state) => state.messenger
+  );
+
+  const getOrCreateNewChannel = async () => {
+    try {
+      const response = await messengerApiService.getOrCreateNewChannel();
+
+      if (response.status) {
+        const data = response.data as Json;
+        const channelId = data.id;
+
+        dispatch(setChannelId(channelId));
+        return true;
+      }
+    } catch (error) {
+      console.log("getOrCreateNewChannel error:", error);
+    }
+    return false;
+  };
+
+  const checkChannelId = async () => {
+    if (channelId) return true;
+    return await getOrCreateNewChannel();
+  };
 
   const GuestMenu = (): React.ReactElement => (
     <Menu style={styles.menu}>
@@ -65,6 +97,7 @@ export const ProfileMenuItem = (): React.ReactElement => {
         accessoryRight={ForwardIcon}
         onPress={() => {
           //navigation.navigate("Edit User Profile Screen");
+          router.push("/edit-user-profile");
         }}
       />
       <MenuItem
@@ -95,7 +128,11 @@ export const ProfileMenuItem = (): React.ReactElement => {
         accessoryLeft={MessageSquareIcon}
         title="แชทกับเจ้าหน้าที่"
         accessoryRight={ForwardIcon}
-        onPress={() => {
+        onPress={async () => {
+          const canChat = await checkChannelId();
+          if (!canChat) {
+            return;
+          }
           router.push("/messenger-chat");
         }}
       />

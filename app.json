@@ -55,7 +55,7 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Use for upload documents required for loan applications or deposit purposes."
+          "photosPermission": "Use for upload documents required for work and recruit form"
         }
       ],
       [

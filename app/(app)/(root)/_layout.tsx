@@ -57,6 +57,10 @@ export default function RootLayout() {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="other-recruits" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="edit-user-profile"
+          options={{ headerShown: false }}
+        />
       </Stack>
     </>
   );

@@ -673,6 +673,51 @@ export class RecruitApiService extends ApiService {
 }
 
 export class MeApiService extends ApiService {
+  public async updateMe({
+    location,
+    firstName,
+    lastName,
+    profileImage,
+  }: {
+    firstName: string;
+    lastName: string;
+    profileImage?: string;
+    location?: string;
+  }): Promise<ApiRegisterResponse> {
+    const formData = new FormData();
+    formData.append("first_name", firstName);
+    formData.append("last_name", lastName);
+    formData.append("profile_image", profileImage ?? "");
+    formData.append("location", location ?? "");
+
+    const response = await this.request.post(`/me`, formData, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  }
+
+  public async updatePassword({
+    password,
+    oldPassword,
+  }: {
+    password: string;
+    oldPassword: string;
+  }): Promise<ApiRegisterResponse> {
+    const formData = new FormData();
+    formData.append("old_password", oldPassword);
+    formData.append("password", password);
+    formData.append("password_confirmation", password);
+
+    const response = await this.request.post(`/me/password`, formData, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  }
+
   public async isLikeWork(workId: Number): Promise<ApiBooleanResponse> {
     const response = await httpRequest.get<ApiBooleanResponse>(
       `/me/work-likes/work/${workId}`

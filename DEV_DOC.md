@@ -32,6 +32,10 @@ eas build --platform android
 eas build -p android --profile preview
 #or
 eas build -p ios --profile preview
+#or
+eas build -p android --profile development
+#or
+eas build -p ios --profile development
 ```
 
 ## Build for Store
