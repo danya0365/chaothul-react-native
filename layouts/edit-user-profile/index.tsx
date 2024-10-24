@@ -87,7 +87,6 @@ export default (): React.ReactElement => {
   const renderEditAvatarButton = (): React.ReactElement => (
     <EditAvatarButton
       onUploaded={(imageUrl) => {
-        console.log("imageUrl", imageUrl);
         setProfileImage({ uri: imageUrl });
       }}
     />
@@ -162,7 +161,6 @@ const themedStyles = StyleService.create({
     borderRadius: 58,
     alignSelf: "center",
     backgroundColor: "background-basic-color-1",
-    tintColor: "color-primary-default",
   },
   editAvatarButton: {
     width: 40,

@@ -1,42 +1,39 @@
-import React from 'react';
-import { StyleSheet, View, ViewProps } from 'react-native';
-import { Avatar, AvatarProps, ButtonElement, ButtonProps } from '@ui-kitten/components';
+import { Avatar, AvatarProps, ButtonElement } from "@ui-kitten/components";
+import React from "react";
+import { StyleSheet, View, ViewProps } from "react-native";
 
 export interface ProfileAvatarProps extends AvatarProps {
   editButton?: () => ButtonElement;
 }
 
-export const ProfileAvatar = (props: ProfileAvatarProps): React.ReactElement<ViewProps> => {
+export const ProfileAvatar = (
+  props: ProfileAvatarProps
+): React.ReactElement<ViewProps> => {
+  const { style, editButton, ...restProps } = props;
 
-  const renderEditButtonElement = (): ButtonElement => {
-    const buttonElement: React.ReactElement<ButtonProps> = props.editButton();
-
+  const renderEditButtonElement = (
+    buttonElement: ButtonElement
+  ): ButtonElement => {
     return React.cloneElement(buttonElement, {
       style: [buttonElement.props.style, styles.editButton],
     });
   };
 
-  const { style, editButton, ...restProps } = props;
-
   return (
     <View style={style}>
-      <Avatar
-        style={[style, styles.avatar]}
-        {...restProps}
-      />
-      {editButton && renderEditButtonElement()}
+      <Avatar {...restProps} style={[style, styles.avatar]} />
+      {editButton ? renderEditButtonElement(editButton()) : null}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   avatar: {
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   editButton: {
-    position: 'absolute',
-    alignSelf: 'flex-end',
+    position: "absolute",
+    alignSelf: "flex-end",
     bottom: 0,
   },
 });
-

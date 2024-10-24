@@ -15,14 +15,20 @@ import {
 } from "@ui-kitten/components";
 import { router } from "expo-router";
 import React, { ReactElement } from "react";
-import { TouchableWithoutFeedback, View } from "react-native";
+import {
+  ImageSourcePropType,
+  ImageURISource,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { useDispatch } from "react-redux";
 import { AuthApiService } from "../../services/api.service";
 import httpRequest, {
   ApiErrorResponse,
   setBearerToken,
 } from "../../services/http-request.service";
-import { EmailIcon, PersonIcon, PlusIcon } from "./extra/icons";
+import { EditAvatarButton } from "./extra/edit-avatar-button.component";
+import { EmailIcon, PersonIcon } from "./extra/icons";
 import { ProfileAvatar } from "./extra/profile-avatar.component";
 
 export default (): React.ReactElement => {
@@ -33,6 +39,9 @@ export default (): React.ReactElement => {
   const [lastName, setLastName] = React.useState<string>();
   const [email, setEmail] = React.useState<string>();
   const [password, setPassword] = React.useState<string>();
+  const [profileImage, setProfileImage] = React.useState<ImageSourcePropType>(
+    require("./assets/image-person.png")
+  );
   const [termsAccepted, setTermsAccepted] = React.useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = React.useState<boolean>(false);
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -81,6 +90,7 @@ export default (): React.ReactElement => {
         password,
         firstName,
         lastName,
+        profileImage: (profileImage as ImageURISource).uri ?? "",
       });
       setIsLoading(false);
       if (response.status) {
@@ -117,10 +127,10 @@ export default (): React.ReactElement => {
   };
 
   const renderEditAvatarButton = (): React.ReactElement => (
-    <Button
-      style={styles.editAvatarButton}
-      status="basic"
-      accessoryRight={PlusIcon}
+    <EditAvatarButton
+      onUploaded={(imageUrl) => {
+        setProfileImage({ uri: imageUrl });
+      }}
     />
   );
 
@@ -145,8 +155,7 @@ export default (): React.ReactElement => {
         <View style={styles.headerContainer}>
           <ProfileAvatar
             style={styles.profileAvatar as any}
-            resizeMode="center"
-            source={require("./assets/image-person.png")}
+            source={profileImage}
             editButton={renderEditAvatarButton}
           />
         </View>
@@ -233,9 +242,11 @@ const themedStyles = StyleService.create({
     borderRadius: 58,
     alignSelf: "center",
     backgroundColor: "background-basic-color-1",
-    tintColor: "color-primary-default",
   },
   editAvatarButton: {
+    position: "absolute",
+    bottom: 0,
+    right: 4,
     width: 40,
     height: 40,
     borderRadius: 20,
