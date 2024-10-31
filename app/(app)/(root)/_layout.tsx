@@ -44,6 +44,7 @@ export default function RootLayout() {
         <Stack.Screen name="your-works" options={{ headerShown: false }} />
         <Stack.Screen name="new-recruit" options={{ headerShown: false }} />
         <Stack.Screen name="new-work" options={{ headerShown: false }} />
+        <Stack.Screen name="favourite" options={{ headerShown: false }} />
         <Stack.Screen
           name="my-recruit-bookings"
           options={{ headerShown: false }}

@@ -358,6 +358,10 @@ export const TabBarHeartOutlineIcon = (style: IconProps): IconElement => (
   <Icon {...style} name="heart-outline" />
 );
 
+export const TabBarCategoryIcon = (style: IconProps): IconElement => (
+  <Icon {...style} name="grid-outline" />
+);
+
 export const BellOutlineIcon = (style: IconProps): IconElement => (
   <IconWithTheme {...style} name="bell-outline" />
 );
