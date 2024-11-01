@@ -1,5 +1,6 @@
 import moment from "moment";
 import { ImageSourcePropType } from "react-native";
+import { Category } from "./category.model";
 import { Json } from "./json";
 import { Like } from "./like.model";
 import { Province } from "./province.model";
@@ -10,6 +11,7 @@ import { WorkType } from "./work-type.model";
 export class Work {
   likeCount: number = 0;
   replyCount: number = 0;
+  public categories: Category[] = [];
 
   constructor(
     readonly id: number,
@@ -88,6 +90,10 @@ export class Work {
 
     workInfo.setLikeCount(json.like_count ?? 0);
     workInfo.setReplyCount(json.reply_count ?? 0);
+
+    workInfo.categories = json.categories
+      ? json.categories.map((val: Json) => Category.createFromApi(val))
+      : [];
     return workInfo;
   }
 }
