@@ -28,7 +28,7 @@ export const CategoryScreen = (): React.ReactElement => {
     <SafeAreaLayoutView style={styles.safeArea} insets="top">
       <TopNavigation title={`หมวดหมู่`} />
       <Divider />
-      <Text>หมวดหมู่</Text>
+      <Text>อยู่ในช่วงพัฒนา...</Text>
     </SafeAreaLayoutView>
   );
 };
