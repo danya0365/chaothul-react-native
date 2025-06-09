@@ -480,7 +480,9 @@ export class WorkApiService extends ApiService {
     formData.append("price", `${price}`);
     formData.append("province_id", provinceId);
     formData.append("primary_image", primaryImage);
-    formData.append("images", images?.join(",") ?? "");
+    for (const image of images) {
+      formData.append("images[]", image);
+    }
 
     const response = await httpRequest.post(`/works`, formData, {
       headers: {
