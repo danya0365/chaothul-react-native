@@ -3,6 +3,7 @@ import {
   ColorPaletteIcon,
   EditIcon,
   ForwardIcon,
+  HeartOutlineIcon,
   InfoIcon,
   LoginIcon,
   LogoutIcon,
@@ -19,7 +20,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 
-export const ProfileMenuItem = ({
+export const ProfileMenu = ({
   messengerApiService = new MessengerApiService(),
 }: {
   messengerApiService?: MessengerApiService;
@@ -98,6 +99,14 @@ export const ProfileMenuItem = ({
         onPress={() => {
           //navigation.navigate("Edit User Profile Screen");
           router.push("/edit-user-profile");
+        }}
+      />
+      <MenuItem
+        accessoryLeft={HeartOutlineIcon}
+        title="รายการที่ถูกใจ"
+        accessoryRight={ForwardIcon}
+        onPress={() => {
+          router.push("/favourite");
         }}
       />
       <MenuItem

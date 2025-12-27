@@ -1,10 +1,11 @@
 import {
   TabBarBellOutlineIcon,
-  TabBarHeartOutlineIcon,
+  TabBarCategoryIcon,
   TabBarHomeOutlineIcon,
   TabBarPaperPlaneOutlineIcon,
   TabBarProfileOutlineIcon,
 } from "@/components/atoms/icons";
+import { CategoryScreen } from "@/screens/category/category.component";
 import { useAppSelector } from "@/store/hooks";
 import {
   BottomTabBarProps,
@@ -20,11 +21,10 @@ import {
 import React from "react";
 import { Animated, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import FavouriteScreen from "./favourite";
 import HomesScreen from "./home";
-import UserNotificationScreen from "./user-notification";
 import ProfileMenuScreen from "./profile-menu";
 import SelectPostScreen from "./select-post";
+import UserNotificationScreen from "./user-notification";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -93,7 +93,7 @@ export const TabBarBottomNavigation: React.FC<BottomTabBarProps> = ({
       <Divider />
       <BottomNavigation selectedIndex={state.index} onSelect={onSelect}>
         <BottomNavigationTab title="หน้าหลัก" icon={TabBarHomeOutlineIcon} />
-        <BottomNavigationTab title="ถูกใจ" icon={TabBarHeartOutlineIcon} />
+        <BottomNavigationTab title="หมวดหมู่" icon={TabBarCategoryIcon} />
         <BottomNavigationTab
           icon={(iconProps) => {
             const { style } = iconProps as unknown as { [x: string]: any };
@@ -156,7 +156,7 @@ const BottomTabNavigator = (): React.ReactElement => {
       tabBar={(props) => <TabBarBottomNavigation {...props} />}
     >
       <BottomTab.Screen name="home" component={HomesScreen} />
-      <BottomTab.Screen name="favourite" component={FavouriteScreen} />
+      <BottomTab.Screen name="category" component={CategoryScreen} />
       <BottomTab.Screen name="select-post" component={SelectPostScreen} />
       <BottomTab.Screen
         name="user-notification"

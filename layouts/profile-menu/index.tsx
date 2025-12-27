@@ -7,7 +7,8 @@ import {
   Text,
   useStyleSheet,
 } from "@ui-kitten/components";
-import React, { useEffect } from "react";
+import { useNavigation } from "expo-router";
+import React from "react";
 import {
   ImageStyle,
   LogBox,
@@ -19,8 +20,7 @@ import {
 import httpRequest from "../../services/http-request.service";
 import { PinIcon } from "./extra/icons";
 import { ImageOverlay } from "./extra/image-overlay.component";
-import { ProfileMenuItem } from "./extra/profile-menu-item.component";
-import { useNavigation } from "expo-router";
+import { ProfileMenu } from "./extra/profile-menu.component";
 
 /*
  * Will warn because container view is ScrollView that contains 3 List components inside.
@@ -101,7 +101,7 @@ export default (): React.ReactElement => {
             </View>
           </ImageOverlay>
         ) : null}
-        <ProfileMenuItem />
+        <ProfileMenu />
       </ScrollView>
       {loading && <LoadingView />}
     </>
