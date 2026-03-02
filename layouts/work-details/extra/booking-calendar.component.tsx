@@ -1,0 +1,99 @@
+import React, { memo, useMemo } from "react";
+import moment from "moment";
+import httpRequest, {
+  ApiErrorResponse,
+} from "../../../services/http-request.service";
+import { WorkApiService } from "../../../services/api.service";
+import CalendarComponent from "./calendar.component";
+import { WorkBooking } from "@/models/work-booking.model";
+import LoadingView from "@/components/organisms/loading.view";
+
+const BookingCalendarComponent = ({
+  workId,
+  isLoading,
+  setIsLoading,
+}: {
+  workId: number;
+  isLoading: boolean;
+  setIsLoading: any;
+}): React.ReactElement => {
+  const workApiService = new WorkApiService(httpRequest);
+  const [initialDate, setInitialDate] = React.useState<moment.Moment>();
+  const [confirmWorkBookings, setConfirmWorkBookings] = React.useState<
+    WorkBooking[]
+  >([]);
+  const getConfirmWorkBookings = async (
+    visibleDate: moment.Moment = moment()
+  ) => {
+    setIsLoading(true);
+    try {
+      const currentDate = moment(visibleDate);
+      const prevMonth = moment(currentDate).subtract(1, "M");
+      const futureMonth = moment(currentDate).add(1, "M");
+      const dateStart = moment(prevMonth).startOf("month").toDate();
+      const dateEnd = moment(futureMonth).endOf("month").toDate();
+      const response = await workApiService.getConfirmBookings(
+        workId,
+        1,
+        100,
+        dateStart,
+        dateEnd
+      );
+      if (response.status) {
+        let responseDataList = response.data.map((data) => {
+          return WorkBooking.createFromApi(data) as WorkBooking;
+        });
+        responseDataList = myUnionBy(
+          [responseDataList, confirmWorkBookings],
+          "id"
+        );
+        setConfirmWorkBookings(responseDataList);
+        if (!initialDate) {
+          setInitialDate(moment());
+        }
+      }
+      setIsLoading(false);
+    } catch (err: any) {
+      if (err.response?.status === 401) {
+        console.log(err.response.data);
+        const data: ApiErrorResponse = err.response.data;
+        console.log(data);
+      } else {
+        console.error(err);
+      }
+      setIsLoading(false);
+    }
+  };
+
+  const myUnionBy = (arrays: WorkBooking[][], iteratee: string): any => {
+    const map: Record<string, WorkBooking> = {};
+
+    arrays.forEach((array: WorkBooking[]) => {
+      array.forEach((object: WorkBooking) => {
+        const key = `${object[iteratee as keyof WorkBooking]}`;
+        map[key] = object;
+      });
+    });
+
+    return Object.values(map);
+  };
+
+  React.useEffect(() => {
+    getConfirmWorkBookings();
+  }, []);
+
+  return (
+    <>
+      {initialDate && (
+        <CalendarComponent
+          initialDate={initialDate}
+          confirmWorkBookings={confirmWorkBookings}
+          getConfirmWorkBookings={getConfirmWorkBookings}
+        />
+      )}
+      {isLoading && <LoadingView />}
+    </>
+  );
+};
+
+export default memo(BookingCalendarComponent);
