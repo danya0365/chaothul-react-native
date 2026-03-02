@@ -563,7 +563,52 @@ export class WorkApiService extends ApiService {
     );
     return response.data;
   }
+
+  public async getWorkReviews(
+    workId: number,
+    page: number = 1,
+    limit: number = 15
+  ): Promise<ApiDataListResponse> {
+    const response = await httpRequest.get<ApiDataListResponse>(
+      `/works/${workId}/reviews`,
+      {
+        params: { page, limit },
+      }
+    );
+    return response.data;
+  }
+
+  public async getWorkReviewCount(workId: number): Promise<ApiNumberResponse> {
+    const response = await httpRequest.get<ApiNumberResponse>(
+      `/works/${workId}/reviews/count`
+    );
+    return response.data;
+  }
+
+  public async createWorkReview(
+    workId: number,
+    content: string,
+    rating: number,
+    title?: string,
+    images?: string[]
+  ): Promise<ApiDataObjectResponse> {
+    const formData = new FormData();
+    formData.append("content", content);
+    formData.append("rating", `${rating}`);
+    if (title) formData.append("title", title);
+    if (images?.length) formData.append("images", images.join(","));
+
+    const response = await httpRequest.post(
+      `/works/${workId}/reviews`,
+      formData,
+      {
+        headers: { "content-type": "multipart/form-data" },
+      }
+    );
+    return response.data;
+  }
 }
+
 
 export class RecruitApiService extends ApiService {
   public async getRecruitDetail(
@@ -672,7 +717,66 @@ export class RecruitApiService extends ApiService {
     );
     return response.data;
   }
+
+  public async getRecruitReviews(
+    recruitId: number,
+    page: number = 1,
+    limit: number = 15
+  ): Promise<ApiDataListResponse> {
+    const response = await httpRequest.get<ApiDataListResponse>(
+      `/recruits/${recruitId}/reviews`,
+      { params: { page, limit } }
+    );
+    return response.data;
+  }
+
+  public async getRecruitReviewCount(
+    recruitId: number
+  ): Promise<ApiNumberResponse> {
+    const response = await httpRequest.get<ApiNumberResponse>(
+      `/recruits/${recruitId}/reviews/count`
+    );
+    return response.data;
+  }
+
+  public async createRecruitReview(
+    recruitId: number,
+    content: string,
+    rating: number,
+    title?: string
+  ): Promise<ApiDataObjectResponse> {
+    const formData = new FormData();
+    formData.append("content", content);
+    formData.append("rating", `${rating}`);
+    if (title) formData.append("title", title);
+    const response = await httpRequest.post(
+      `/recruits/${recruitId}/reviews`,
+      formData,
+      { headers: { "content-type": "multipart/form-data" } }
+    );
+    return response.data;
+  }
+
+  public async doLikeRecruit(recruitId: number): Promise<ApiResponse> {
+    const formData = new FormData();
+    const response = await httpRequest.post<ApiResponse>(
+      `/recruits/${recruitId}/likes`,
+      formData,
+      { headers: { "content-type": "multipart/form-data" } }
+    );
+    return response.data;
+  }
+
+  public async getRecruitLikeCount(
+    recruitId: number
+  ): Promise<ApiNumberResponse> {
+    const response = await httpRequest.get<ApiNumberResponse>(
+      `/recruits/${recruitId}/likes/count`
+    );
+    return response.data;
+  }
 }
+
 
 export class MeApiService extends ApiService {
   public async updateMe({
@@ -808,4 +912,26 @@ export class MeApiService extends ApiService {
     );
     return response.data;
   }
+
+  public async getMePosts(page: number): Promise<ApiDataListResponse> {
+    const response = await httpRequest.get(`/me/posts`, {
+      params: { page, limit: 15 },
+    });
+    return response.data;
+  }
+
+  public async getMeLikedPosts(page: number): Promise<ApiDataListResponse> {
+    const response = await httpRequest.get(`/me/post-likes`, {
+      params: { page, limit: 15 },
+    });
+    return response.data;
+  }
+
+  public async isLikeRecruit(recruitId: number): Promise<ApiBooleanResponse> {
+    const response = await httpRequest.get<ApiBooleanResponse>(
+      `/me/recruit-likes/recruit/${recruitId}`
+    );
+    return response.data;
+  }
 }
+

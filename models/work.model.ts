@@ -4,13 +4,12 @@ import { Category } from "./category.model";
 import { Json } from "./json";
 import { Like } from "./like.model";
 import { Province } from "./province.model";
-import { Review } from "./review.model";
 import { UserProfile } from "./user-profile";
 import { WorkType } from "./work-type.model";
 
 export class Work {
   likeCount: number = 0;
-  replyCount: number = 0;
+  reviewCount: number = 0;
   public categories: Category[] = [];
 
   constructor(
@@ -27,7 +26,6 @@ export class Work {
     readonly author: UserProfile | null,
     readonly isSync: boolean,
     readonly date: Date,
-    readonly reviews: Review[] = [],
     readonly likes: Like[] = [],
     readonly displayPriority: number = 0,
     readonly avgReviewRating: number = 0
@@ -41,8 +39,8 @@ export class Work {
     return `${this.likeCount.toLocaleString("en-US")}`;
   }
 
-  get formattedReplyCount(): string {
-    return `${this.replyCount.toLocaleString("en-US")}`;
+  get formattedReviewCount(): string {
+    return `${this.reviewCount.toLocaleString("en-US")}`;
   }
 
   get shortTitle(): string {
@@ -63,8 +61,8 @@ export class Work {
     this.likeCount = likeCount;
   }
 
-  setReplyCount(replyCount: number) {
-    this.replyCount = replyCount;
+  setReviewCount(reviewCount: number) {
+    this.reviewCount = reviewCount;
   }
 
   static createFromApi(json: Json): Work {
@@ -89,7 +87,7 @@ export class Work {
     );
 
     workInfo.setLikeCount(json.like_count ?? 0);
-    workInfo.setReplyCount(json.reply_count ?? 0);
+    workInfo.setReviewCount(json.reply_count ?? 0);
 
     workInfo.categories = json.categories
       ? json.categories.map((val: Json) => Category.createFromApi(val))

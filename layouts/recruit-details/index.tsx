@@ -1,27 +1,29 @@
 import LoadingView from "@/components/organisms/loading.view";
 import { Recruit } from "@/models/recruit.model";
+import { Review } from "@/models/review.model";
 import { MeApiService, RecruitApiService } from "@/services/api.service";
 import { useAppSelector } from "@/store/hooks";
 import {
-  Avatar,
-  Button,
-  Card,
-  List,
-  StyleService,
-  Text,
-  useStyleSheet,
+    Avatar,
+    Button,
+    Card,
+    List,
+    StyleService,
+    Text,
+    useStyleSheet,
 } from "@ui-kitten/components";
 import { router } from "expo-router";
 import React from "react";
 import {
-  Image,
-  ImageSourcePropType,
-  ListRenderItemInfo,
-  RefreshControl,
-  ScrollView,
-  View,
+    Image,
+    ImageSourcePropType,
+    ListRenderItemInfo,
+    RefreshControl,
+    ScrollView,
+    View,
 } from "react-native";
 import httpRequest from "../../services/http-request.service";
+import ReviewList from "../review-list";
 import { ImageOverlay } from "./extra/image-overlay.component";
 
 interface Props {
@@ -39,6 +41,7 @@ export default ({
   const { user } = useAppSelector((state) => state.auth);
   const [refreshing, setRefreshing] = React.useState(false);
   const [recruitInfo, setRecruitInfo] = React.useState<Recruit>();
+  const [reviews, setReviews] = React.useState<Review[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isCanManageRecruit, setIsCanManageRecruit] = React.useState(false);
 
@@ -60,6 +63,15 @@ export default ({
       const response = await recruitApiService.getRecruitDetail(recruitId);
       const responseRecruit = Recruit.createFromApi(response.data);
       setRecruitInfo(responseRecruit);
+
+      // fetch reviews separately
+      const reviewResponse = await recruitApiService.getRecruitReviews(recruitId, 1, 20);
+      if (reviewResponse.status && reviewResponse.data) {
+        setReviews(
+          (reviewResponse.data as any[]).map((r: any) => Review.createFromApi(r))
+        );
+      }
+
       callback();
       setIsLoading(false);
     } catch (error: any) {
@@ -177,6 +189,21 @@ export default ({
               />
             </>
           )}
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionLabel} category="s1">
+              รีวิวจากผู้ว่าจ้าง
+            </Text>
+            {user && !isCanManageRecruit && (
+              <Button
+                size="small"
+                appearance="outline"
+                onPress={() => router.push(`/recruit/${recruitId}/create-review`)}
+              >
+                เขียนรีวิว
+              </Button>
+            )}
+          </View>
+          <ReviewList reviews={reviews} />
         </ScrollView>
       )}
       {isLoading && <LoadingView />}
@@ -241,6 +268,14 @@ const themedStyles = StyleService.create({
   sectionLabel: {
     marginHorizontal: 16,
     marginVertical: 8,
+    flex: 1,
+  },
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginHorizontal: 16,
+    marginVertical: 4,
   },
   imagesList: {
     padding: 8,

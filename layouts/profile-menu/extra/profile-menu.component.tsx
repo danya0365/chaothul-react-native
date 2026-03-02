@@ -1,13 +1,13 @@
 import {
-  BookmarkOutlineIcon,
-  ColorPaletteIcon,
-  EditIcon,
-  ForwardIcon,
-  HeartOutlineIcon,
-  InfoIcon,
-  LoginIcon,
-  LogoutIcon,
-  MessageSquareIcon,
+    BookmarkOutlineIcon,
+    ColorPaletteIcon,
+    EditIcon,
+    ForwardIcon,
+    HeartOutlineIcon,
+    InfoIcon,
+    LoginIcon,
+    LogoutIcon,
+    MessageSquareIcon,
 } from "@/components/atoms/icons";
 import { Json } from "@/models/json";
 import { MessengerApiService } from "@/services/api.service";
@@ -123,6 +123,14 @@ export const ProfileMenu = ({
         accessoryRight={ForwardIcon}
         onPress={() => {
           router.push("/my-recruit-bookings");
+        }}
+      />
+      <MenuItem
+        accessoryLeft={HeartOutlineIcon}
+        title="รีวิวของฉัน"
+        accessoryRight={ForwardIcon}
+        onPress={() => {
+          router.push("/my-reviews");
         }}
       />
       <MenuItem

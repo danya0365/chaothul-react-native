@@ -1,6 +1,7 @@
 import { MessageCircleIcon } from "@/components/atoms/icons";
 import LoadingView from "@/components/organisms/loading.view";
 import useAuth from "@/hooks/auth";
+import { Review } from "@/models/review.model";
 import { Work } from "@/models/work.model";
 import {
   Avatar,
@@ -46,6 +47,7 @@ export default ({ workId, onWorkInfoReady }: Props): React.ReactElement => {
 
   const [refreshing, setRefreshing] = React.useState(false);
   const [workInfo, setWorkInfo] = React.useState<Work>();
+  const [reviews, setReviews] = React.useState<Review[]>([]);
   const [isUserLike, setIsUserLike] = React.useState(false);
   const [isLikeButtonDisabled, setIsLikeButtonDisabled] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -133,6 +135,17 @@ export default ({ workId, onWorkInfoReady }: Props): React.ReactElement => {
       const likeCount = await getWorkLikeCount();
       responseWork.setLikeCount(likeCount);
       setWorkInfo(responseWork);
+
+      // fetch reviews separately
+      const reviewResponse = await workApiService.getWorkReviews(workId, 1, 20);
+      if (reviewResponse.status && reviewResponse.data) {
+        setReviews(
+          (reviewResponse.data as any[]).map((r: any) =>
+            Review.createFromApi(r)
+          )
+        );
+      }
+
       callback();
       setIsLoading(false);
     } catch (error: any) {
@@ -272,7 +285,7 @@ export default ({ workId, onWorkInfoReady }: Props): React.ReactElement => {
               status="basic"
               accessoryLeft={MessageCircleIcon}
             >
-              {`${workInfo.reviews.length}`}
+              {`${reviews.length}`}
             </Button>
             {likeButtonItem()}
           </View>
@@ -300,10 +313,21 @@ export default ({ workId, onWorkInfoReady }: Props): React.ReactElement => {
               />
             </>
           )}
-          <Text style={styles.sectionLabel} category="s1">
-            รีวิวจากผู้ว่าจ้าง
-          </Text>
-          <ReviewList reviews={workInfo.reviews} />
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionLabel} category="s1">
+              รีวิวจากผู้ว่าจ้าง {workInfo.avgReviewRating > 0 ? `⭐ ${workInfo.avgReviewRating}` : ""}
+            </Text>
+            {user && !isCanManageWork && (
+              <Button
+                size="small"
+                appearance="outline"
+                onPress={() => router.push(`/work/${workId}/create-review`)}
+              >
+                เขียนรีวิว
+              </Button>
+            )}
+          </View>
+          <ReviewList reviews={reviews} />
         </ScrollView>
       )}
       {isLoading && <LoadingView />}
@@ -368,6 +392,14 @@ const themedStyles = StyleService.create({
   sectionLabel: {
     marginHorizontal: 16,
     marginVertical: 8,
+    flex: 1,
+  },
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginHorizontal: 16,
+    marginVertical: 4,
   },
   imagesList: {
     padding: 8,
